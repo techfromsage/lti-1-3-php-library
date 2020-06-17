@@ -49,7 +49,7 @@ class Example_Database implements LTI\Database {
 
 The `find_registration_by_issuer` method must return an `LTI\LTI_Registration`.
 ```php
-return LTI\LTI_Registration::new()
+return LTI\LTI_Registration::newInstance()
     ->set_auth_login_url($auth_login_url)
     ->set_auth_token_url($auth_token_url)
     ->set_client_id($client_id)
@@ -61,7 +61,7 @@ return LTI\LTI_Registration::new()
 
 The `find_deployment` method must return an `LTI\LTI_Deployment` if it exists within the database.
 ```php
-return LTI\LTI_Deployment::new()
+return LTI\LTI_Deployment::newInstance()
     ->set_deployment_id($deployment_id);
 ```
 
@@ -75,7 +75,7 @@ LTI\JWKS_Endpoint::from_issuer(new Example_Database(), 'http://example.com')->ou
 // From registration
 LTI\JWKS_Endpoint::from_registration($registration)->output_jwks();
 // From array
-LTI\JWKS_Endpoint::new(['a_unique_KID' => file_get_contents('/path/to/private/key.pem')])->output_jwks();
+LTI\JWKS_Endpoint::newInstance(['a_unique_KID' => file_get_contents('/path/to/private/key.pem')])->output_jwks();
 ```
 
 ## Handling Requests
@@ -85,7 +85,7 @@ LTI 1.3 uses a modified version of the OpenId Connect third party initiate login
 
 To handle this request, you must first create a new `LTI\LTI_OIDC_Login` object.
 ```php
-$login = LTI_OIDC_Login::new(new Example_Database());
+$login = LTI_OIDC_Login::newInstance(new Example_Database());
 ```
 
 Now you must configure your login request with a return url (this must be preconfigured and white-listed on the tool).
@@ -121,7 +121,7 @@ Redirect is now done, we can move onto the launch.
 ### LTI Message Launches
 Now that we have done the OIDC log the platform will launch back to the tool. To handle this request, first we need to create a new `LTI\LTI_Message_Launch` object.
 ```php
-$launch = LTI\LTI_Message_Launch::new(new Example_Database());
+$launch = LTI\LTI_Message_Launch::newInstance(new Example_Database());
 ```
 
 Once we have the message launch, we can validate it. This will check signatures and the presence of a deployment and any required parameters.
@@ -191,7 +191,7 @@ $dl = $launch->get_deep_link();
 
 Now we are going to need to create `LTI\LTI_Deep_Link_Resource` to return.
 ```php
-$resource = LTI\LTI_Deep_Link_Resource::new()
+$resource = LTI\LTI_Deep_Link_Resource::newInstance()
     ->set_url("https://my.tool/launch")
     ->set_custom_params(['my_param' => $my_param])
     ->set_title('My Resource');
@@ -244,7 +244,7 @@ $ags = $launch->get_ags();
 
 To pass a grade back to the platform, you will need to create an `LTI\LTI_Grade` object and populate it with the necessary information.
 ```php
-$grade = LTI\LTI_Grade::new()
+$grade = LTI\LTI_Grade::newInstance()
     ->set_score_given($grade)
     ->set_score_maximum(100)
     ->set_timestamp(date(DateTime::ISO8601))
@@ -261,7 +261,7 @@ This will put the grade into the default provided lineitem. If no default lineit
 
 If you want to send multiple types of grade back, that can be done by specifying an `LTI\LTI_Lineitem`.
 ```php
-$lineitem = LTI\LTI_Lineitem::new()
+$lineitem = LTI\LTI_Lineitem::newInstance()
     ->set_tag('grade')
     ->set_score_maximum(100)
     ->set_label('Grade');

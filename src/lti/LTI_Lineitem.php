@@ -26,7 +26,7 @@ class LTI_Lineitem {
     /**
      * Static function to allow for method chaining without having to assign to a variable first.
      */
-    public static function new() {
+    public static function newInstance() {
         return new LTI_Lineitem();
     }
 

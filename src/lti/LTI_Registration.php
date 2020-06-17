@@ -12,7 +12,7 @@ class LTI_Registration {
     private $tool_private_key;
     private $kid;
 
-    public static function new() {
+    public static function newInstance() {
         return new LTI_Registration();
     }
 

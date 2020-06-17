@@ -10,7 +10,7 @@ class LTI_Deep_Link_Resource {
     private $custom_params = [];
     private $target = 'iframe';
 
-    public static function new() {
+    public static function newInstance() {
         return new LTI_Deep_Link_Resource();
     }
 
