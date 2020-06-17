@@ -24,11 +24,28 @@ class Cookie {
             'secure' => true
         ];
 
-        setcookie($name, $value, array_merge($cookie_options, $same_site_options, $options));
+        self::setcookie73($name, $value, array_merge($cookie_options, $same_site_options, $options));
 
         // Set a second fallback cookie in the event that "SameSite" is not supported
-        setcookie("LEGACY_" . $name, $value, array_merge($cookie_options, $options));
+        self::setcookie73("LEGACY_" . $name, $value, array_merge($cookie_options, $options));
         return $this;
+    }
+
+    /**
+     * Add support for the PHP7.3+ `setcookie` with options, in a <PHP7.3-friendly way
+     */
+    private static function setcookie73($name, $value, array $options) {
+        $expires = isset($options['expires']) ? $options['expires'] : 0;
+        $path = isset($options['path']) ? $options['path'] : '/';
+        $domain = isset($options['domain']) ? $options['domain'] : '';
+        $secure = isset($options['secure']) ? $options['secure'] : false;
+        $httponly = isset($options['httponly']) ? $options['httponly'] : false;
+
+        // samesite can only be represented as a hack before PHP7.3
+        $samesite = isset($options['samesite']) ? $options['samesite'] : null;
+        $pathWithSamesiteHack = is_null($samesite) ? $path : "$path; $samesite";
+
+        setcookie($name, $value, $expires, $pathWithSamesiteHack, $domain, $secure, $httponly);
     }
 }
 ?>
