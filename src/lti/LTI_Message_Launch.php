@@ -42,7 +42,7 @@ class LTI_Message_Launch {
     /**
      * Static function to allow for method chaining without having to assign to a variable first.
      */
-    public static function new(Database $database, Cache $cache = null, Cookie $cookie = null) {
+    public static function newInstance(Database $database, Cache $cache = null, Cookie $cookie = null) {
         return new LTI_Message_Launch($database, $cache, $cookie);
     }
 
