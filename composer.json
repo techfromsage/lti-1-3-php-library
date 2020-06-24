@@ -1,5 +1,5 @@
 {
-    "name": "imsglobal/lti-1p3-tool",
+    "name": "talis/lti-1p3-php-library",
     "type": "library",
     "require": {
         "fproject/php-jwt": "^4.0",
