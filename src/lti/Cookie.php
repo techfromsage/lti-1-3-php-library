@@ -43,7 +43,7 @@ class Cookie {
 
         // samesite can only be represented as a hack before PHP7.3
         $samesite = isset($options['samesite']) ? $options['samesite'] : null;
-        $pathWithSamesiteHack = is_null($samesite) ? $path : "$path; $samesite";
+        $pathWithSamesiteHack = is_null($samesite) ? $path : "$path; SameSite=$samesite";
 
         setcookie($name, $value, $expires, $pathWithSamesiteHack, $domain, $secure, $httponly);
     }
