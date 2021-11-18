@@ -1,21 +1,23 @@
 version: 2.1
 
 jobs:
-  install-composer-dependencies:
+  test-php55:
+    machine:  
+      image: ubuntu-2004:202107-02    
     steps:
       - checkout
       - run: docker-compose run composer install
-  test-php55:
-    steps:
-      - checkout
-      - run: docker-compose run phpunit55 test/unit
+      - run: docker-compose run phpunit55 tests/unit
   test-php70:
+    machine:  
+      image: ubuntu-2004:202107-02    
     steps:
       - checkout
-      - run: docker-compose run phpunit70 test/unit      
+      - run: docker-compose run composer install
+      - run: docker-compose run phpunit70 tests/unit      
 
 workflows:
   build_and_test:
-    - install-composer-dependencies
-    - test-php55
-    - test-php70
+    jobs:    
+      - test-php55
+      - test-php70
