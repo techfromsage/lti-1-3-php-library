@@ -38,4 +38,9 @@ class LTI_Registration_Test extends TestBase
         );
         $registration->get_kid();
     }
+
+    public function testFail()
+    {
+        $this->fail('Just a failure');
+    }
 }
