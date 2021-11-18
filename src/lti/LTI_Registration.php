@@ -13,7 +13,7 @@ class LTI_Registration {
     private $kid;
 
     public static function newInstance() {
-        return new LTI_Registration();
+        return new self();
     }
 
     public function get_issuer() {
@@ -80,6 +80,9 @@ class LTI_Registration {
     }
 
     public function get_kid() {
+        if (empty($this->kid) && (empty($this->issuer) || empty($this->client_id))) {
+            throw new \UnexpectedValueException('kid or issuer and client_id must be set');
+        }
         return empty($this->kid) ? hash('sha256', trim($this->issuer . $this->client_id)) : $this->kid;
     }
 
