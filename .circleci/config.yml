@@ -24,5 +24,9 @@ workflows:
   build_and_test:
     jobs:    
       - install-composer-dependencies
-      - test-php55
-      - test-php70
+      - test-php55:
+          requires: 
+            - install-composer-dependencies
+      - test-php70:
+          requires:
+            - install-composer-dependencies
