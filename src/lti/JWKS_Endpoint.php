@@ -35,14 +35,14 @@ class JWKS_Endpoint {
             if ( !$key->publicExponent ) {
                 continue;
             }
-            $components = array(
+            $components = [
                 'kty' => 'RSA',
                 'alg' => 'RS256',
                 'use' => 'sig',
                 'e' => JWT::urlsafeB64Encode($key->publicExponent->toBytes()),
                 'n' => JWT::urlsafeB64Encode($key->modulus->toBytes()),
                 'kid' => $kid,
-            );
+            ];
             $jwks[] = $components;
         }
         return ['keys' => $jwks];

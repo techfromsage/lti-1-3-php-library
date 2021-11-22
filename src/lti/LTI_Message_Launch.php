@@ -300,7 +300,7 @@ class LTI_Message_Launch {
 
         // Validate JWT signature
         try {
-            JWT::decode($this->request['id_token'], $public_key['key'], array('RS256'));
+            JWT::decode($this->request['id_token'], $public_key['key'], ['RS256']);
         } catch(\Exception $e) {
             var_dump($e);
             // Error validating signature.
@@ -337,7 +337,7 @@ class LTI_Message_Launch {
 
         // Create instances of all validators
         $classes = get_declared_classes();
-        $validators = array();
+        $validators = [];
         foreach ($classes as $class_name) {
             // Check the class implements message validator
             $reflect = new \ReflectionClass($class_name);

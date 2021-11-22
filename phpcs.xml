@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<ruleset name="LTI1p3PHPLibrary">
+    <arg name="extensions" value="php" />
+    <!-- Generic -->
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
+    <rule ref="Generic.Classes.OpeningBraceSameLine" />
+    <rule ref="Generic.Commenting.DocComment" />
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120" />
+            <property name="absoluteLineLimit" value="0" />
+            <property name="ignoreComments" value="true" />
+        </properties>    
+    </rule>
+    <rule ref="Generic.Files.OneClassPerFile" />
+    <rule ref="Generic.Files.OneInterfacePerFile" />
+    <rule ref="Generic.Files.OneObjectStructurePerFile" />
+    <rule ref="Generic.Files.OneTraitPerFile" />
+    <rule ref="Generic.NamingConventions.UpperCaseConstantName" />
+    <rule ref="Generic.PHP.NoSilencedErrors" />
+    <rule ref="Generic.WhiteSpace.DisallowTabIndent" />    
+    <!-- PEAR -->
+    <rule ref="PEAR.NamingConventions.ValidClassName" />
+    <!-- Squiz -->
+    <rule ref="Squiz.Commenting.FunctionComment">
+        <exclude name="Squiz.Commenting.FunctionComment.MissingReturn" />
+        <exclude name="Squiz.Commenting.FunctionComment.ParamCommentNotCapital" />
+        <exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
+        <exclude name="Squiz.Commenting.FunctionComment.ThrowsNoFullStop" />
+        <exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType" />
+        <exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamName" />
+        <exclude name="Squiz.Commenting.FunctionComment.ScalarTypeHintMissing" />      
+    </rule>        
+    <rule ref="Squiz.Commenting.FunctionComment.Missing">
+        <type>warning</type>
+    </rule>      
+</ruleset>
