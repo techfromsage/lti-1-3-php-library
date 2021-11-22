@@ -1,7 +1,7 @@
 <?php
 namespace IMSGlobal\LTI;
 
-class ExampleCache implements Cache {
+class FileCache implements Cache {
 
     private $cache;
 

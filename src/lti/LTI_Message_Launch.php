@@ -29,7 +29,7 @@ class LTI_Message_Launch {
         $this->launch_id = uniqid("lti1p3_launch_", true);
 
         if ($cache === null) {
-            $cache = new Cache();
+            $cache = new FileCache();
         }
         $this->cache = $cache;
 
