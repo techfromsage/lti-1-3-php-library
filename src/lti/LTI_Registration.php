@@ -17,6 +17,8 @@ class LTI_Registration {
     /**
      * Creates a new LTI_Registration instance
      * 
+     * Added to enable the builder pattern in PHP 5.5
+     * 
      * @return LTI_Registration 
      */
     public static function newInstance() {
