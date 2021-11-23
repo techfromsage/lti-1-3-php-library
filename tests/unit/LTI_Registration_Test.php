@@ -4,8 +4,7 @@ namespace IMSGlobal\LTI\Tests\unit;
 
 use IMSGlobal\LTI\LTI_Registration;
 
-class LTI_Registration_Test extends TestBase
-{
+class LTI_Registration_Test extends TestBase {
     public function testNewInstance()
     {
         $this->assertInstanceOf('IMSGlobal\LTI\LTI_Registration', LTI_Registration::newInstance());
@@ -37,5 +36,47 @@ class LTI_Registration_Test extends TestBase
             'kid or issuer and client_id must be set'
         );
         $registration->get_kid();
+    }
+
+    public function testSetGetAuthServer()
+    {
+        $authServer = 'https://example.com/lti1p3/auth_server';
+        $authTokenUrl = 'https://example.com/lti1p3/auth_token_url';
+
+        $registration = LTI_Registration::newInstance();
+        $this->assertNull($registration->get_auth_server());
+
+        $registration->set_auth_token_url($authTokenUrl);
+
+        // If auth_server is not set, uses auth_token_url
+        $this->assertEquals($authTokenUrl, $registration->get_auth_server());
+
+        $registration->set_auth_server($authServer);
+        $this->assertEquals($authServer, $registration->get_auth_server());
+    }
+
+    public function testGettersSetters()
+    {    
+        $issuer = uniqid();
+        $clientId = uniqid();
+        $keySetUrl = 'https://example.com/ltip1/key_set_url';
+        $authTokenUrl = 'https://example.com/lti1p3/auth_token_url';
+        $authLoginUrl = 'https://example.com/lti1p3/auth_login_url';
+        $toolPrivateKey = file_get_contents(dirname(__FILE__) . '/fixtures/private.key');
+
+        $registration = LTI_Registration::newInstance()
+            ->set_issuer($issuer)
+            ->set_client_id($clientId)
+            ->set_key_set_url($keySetUrl)
+            ->set_auth_token_url($authTokenUrl)
+            ->set_auth_login_url($authLoginUrl)
+            ->set_tool_private_key($toolPrivateKey);
+        
+        $this->assertEquals($issuer, $registration->get_issuer());
+        $this->assertEquals($clientId, $registration->get_client_id());
+        $this->assertEquals($keySetUrl, $registration->get_key_set_url());
+        $this->assertEquals($authTokenUrl, $registration->get_auth_token_url());
+        $this->assertEquals($authLoginUrl, $registration->get_auth_login_url());
+        $this->assertEquals($toolPrivateKey, $registration->get_tool_private_key());        
     }
 }

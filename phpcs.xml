@@ -23,6 +23,7 @@
     <rule ref="PEAR.NamingConventions.ValidClassName" />
     <!-- Squiz -->
     <rule ref="Squiz.Commenting.FunctionComment">
+        <exclude-pattern>*/tests/*</exclude-pattern>
         <exclude name="Squiz.Commenting.FunctionComment.MissingReturn" />
         <exclude name="Squiz.Commenting.FunctionComment.ParamCommentNotCapital" />
         <exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
