@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   linting:
     machine:
-      machine: ubuntu-2004:202107-02
+      image: ubuntu-2004:202107-02
     steps:
       - checkout
       - run: docker-compose run composer install
@@ -28,8 +28,8 @@ workflows:
     jobs:    
       - linting
       - test-php55:
-        requires:
-          - linting
+          requires:
+            - linting
       - test-php70:
-        requires:
-          - linting      
+          requires:
+            - linting      
