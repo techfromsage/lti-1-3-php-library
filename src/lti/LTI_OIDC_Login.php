@@ -11,7 +11,7 @@ class LTI_OIDC_Login {
      * Constructor
      *
      * @param Database  $database   Instance of the database interface used for looking up registrations and deployments.
-     * @param FileCache     $cache      Instance of the Cache interface used to loading and storing launches. If non is provided launch data will be store in $_SESSION.
+     * @param FileCache $cache      Instance of the Cache interface used to loading and storing launches. If non is provided launch data will be store in $_SESSION.
      * @param Cookie    $cookie     Instance of the Cookie interface used to set and read cookies. Will default to using $_COOKIE and setcookie.
      */
     function __construct(Database $database, FileCache $cache = null, Cookie $cookie = null) {
@@ -29,6 +29,12 @@ class LTI_OIDC_Login {
 
     /**
      * Static function to allow for method chaining without having to assign to a variable first.
+     *
+     * @param Database  $database   Instance of the database interface used for looking up registrations and deployments.
+     * @param FileCache $cache      Instance of the Cache interface used to loading and storing launches. If non is provided launch data will be store in $_SESSION.
+     * @param Cookie    $cookie     Instance of the Cookie interface used to set and read cookies. Will default to using $_COOKIE and setcookie.
+     * 
+     * @return self
      */
     public static function newInstance(Database $database, FileCache $cache = null, Cookie $cookie = null) {
         return new LTI_OIDC_Login($database, $cache, $cookie);
