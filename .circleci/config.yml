@@ -27,9 +27,11 @@ workflows:
   build_and_test:
     jobs:    
       - linting
-      - test-php55:
-          requires:
-            - linting
-      - test-php70:
-          requires:
-            - linting      
+      - test-php55
+      - test-php70
+      # - test-php55:
+      #     requires:
+      #       - linting
+      # - test-php70:
+      #     requires:
+      #       - linting      
