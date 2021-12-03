@@ -3,17 +3,18 @@
 namespace IMSGlobal\LTI\Tests\unit;
 
 use IMSGlobal\LTI\JWKS_Endpoint;
+use IMSGlobal\LTI\Tests\unit\helpers\MockLTIRegistration;
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_Exception;
 
 class JWKS_Endpoint_Test extends TestBase {
     private $privateKey;
-    private $registrationDatabase;
+
+    use MockLTIRegistration;
 
     public function setUp()
     {
         $this->privateKey = file_get_contents(dirname(__FILE__) . '/fixtures/private.key');
-        $this->registrationDatabase = new DummyDatabase();
         parent::setUp();
     }
 
@@ -97,20 +98,6 @@ class JWKS_Endpoint_Test extends TestBase {
     {
         return $this->getMockBuilder('\IMSGlobal\LTI\Tests\unit\DummyDatabase')
             ->setMethods(['find_registration_by_issuer'])
-            ->getMock();
-    }
-
-    /**
-     * Generates a mock LTI registration
-     * 
-     * @return PHPUnit_Framework_MockObject_MockObject|\IMSGlobal\LTI\LTI_Registration
-     * 
-     * @throws PHPUnit_Framework_Exception 
-     */
-    private function getMockLTIRegistration()
-    {
-        return $this->getMockBuilder('\IMSGlobal\LTI\LTI_Registration')
-            ->setMethods(['get_kid', 'get_tool_private_key'])
             ->getMock();
     }
 }
