@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run: docker-compose run composer install
-      - run: docker-compose run php70 "./vendor/bin/phpcs --config-set ignore_warnings_on_exit 1; ./vendor/bin/phpcs /app"
+      - run: docker-compose run php70 ./vendor/bin/phpcs ./src
   test-php55:
     machine:  
       image: ubuntu-2004:202107-02    

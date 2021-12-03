@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="LTI1p3PHPLibrary">
+    <config name="ignore_warnings_on_exit" value="1"/>
     <arg name="extensions" value="php" />
     <exclude-pattern>*/src/lti/LTI_Assignments_Grades_Service.php</exclude-pattern>
     <exclude-pattern>*/src/lti/LTI_Course_Groups_Service.php</exclude-pattern>    
