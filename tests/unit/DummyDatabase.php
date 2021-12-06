@@ -16,13 +16,17 @@ class DummyDatabase implements Database {
             $registrations = json_decode($registrationDBFile, true);
             foreach ($registrations as $registrationDetails) {
                 if ($registrationDetails['issuer'] === $iss) {
-                    if (is_null($clientId) || $registrationDetails['client_id'] === $clientId) {
+                    if (empty($clientId) || $registrationDetails['client_id'] === $clientId) {
                         $details = $registrationDetails;
                         break;
                     }
                 }
             }
             if (!empty($details)) {
+                if (empty($clientId)) {
+                    $clientId = $details['client_id'];                    
+                }
+
                 $registration = LTI_Registration::newInstance()
                     ->set_auth_login_url($details['auth_login_url'])
                     ->set_auth_token_url($details['auth_token_url'])
@@ -30,9 +34,8 @@ class DummyDatabase implements Database {
                     ->set_kid("key_{$iss}_{$clientId}")
                     ->set_tool_private_key($privateKeyFileContents);                
                 
-                if (empty($clientId)) {
-                    $registration->set_client_id($details['client_id']);
-                }
+
+                $registration->set_client_id($clientId);
                 return $registration;
             }
         }
