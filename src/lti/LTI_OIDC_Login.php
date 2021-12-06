@@ -11,10 +11,10 @@ class LTI_OIDC_Login {
      * Constructor
      *
      * @param Database  $database   Instance of the database interface used for looking up registrations and deployments.
-     * @param FileCache $cache      Instance of the Cache interface used to loading and storing launches. If non is provided launch data will be store in $_SESSION.
+     * @param Cache     $cache      Instance of the Cache interface used to loading and storing launches. If non is provided launch data will be store in $_SESSION.
      * @param Cookie    $cookie     Instance of the Cookie interface used to set and read cookies. Will default to using $_COOKIE and setcookie.
      */
-    function __construct(Database $database, FileCache $cache = null, Cookie $cookie = null) {
+    function __construct(Database $database, Cache $cache = null, Cookie $cookie = null) {
         $this->db = $database;
         if ($cache === null) {
             $cache = new FileCache();
@@ -31,12 +31,12 @@ class LTI_OIDC_Login {
      * Static function to allow for method chaining without having to assign to a variable first.
      *
      * @param Database  $database   Instance of the database interface used for looking up registrations and deployments.
-     * @param FileCache $cache      Instance of the Cache interface used to loading and storing launches. If non is provided launch data will be store in $_SESSION.
+     * @param Cache     $cache      Instance of the Cache interface used to loading and storing launches. If non is provided launch data will be store in $_SESSION.
      * @param Cookie    $cookie     Instance of the Cookie interface used to set and read cookies. Will default to using $_COOKIE and setcookie.
      * 
      * @return self
      */
-    public static function newInstance(Database $database, FileCache $cache = null, Cookie $cookie = null) {
+    public static function newInstance(Database $database, Cache $cache = null, Cookie $cookie = null) {
         return new LTI_OIDC_Login($database, $cache, $cookie);
     }
 
@@ -112,8 +112,10 @@ class LTI_OIDC_Login {
             throw new OIDC_Exception("Could not find login hint", 1);
         }
 
+        $clientId = isset($request['aud']) ? $request['aud'] : null;
+
         // Fetch Registration Details.
-        $registration = $this->db->find_registration_by_issuer($request['iss']);
+        $registration = $this->db->find_registration_by_issuer($request['iss'], $clientId);
 
         // Check we got something.
         if (empty($registration)) {
