@@ -2,12 +2,12 @@ version: 2.1
 
 jobs:
   linting:
-    machine:
-      image: ubuntu-2004:202107-02
+    docker:
+      - image: php:7.0-cli
     steps:
       - checkout
-      - run: docker-compose run composer install
-      - run: docker-compose run php70 ./vendor/bin/phpcs ./src
+      - run: composer install
+      - run: ./vendor/bin/phpcs ./src
   test-php55:
     machine:  
       image: ubuntu-2004:202107-02    
@@ -17,11 +17,11 @@ jobs:
       - run: docker-compose run phpunit55 tests/unit
   test-php70:
     machine:  
-      image: ubuntu-2004:202107-02    
+      image: php:7.0-cli
     steps:
       - checkout
-      - run: docker-compose run composer install
-      - run: docker-compose run phpunit70 tests/unit      
+      - run: composer install
+      - run: ./vendor/bin/phpunit tests/unit      
 
 workflows:
   build_and_test:
