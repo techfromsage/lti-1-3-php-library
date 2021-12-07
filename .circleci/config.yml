@@ -3,11 +3,12 @@ version: 2.1
 jobs:
   linting:
     docker:
-      - image: docker:stable-git
+      - image: php:7.0-cli
+      - image: composer:latest
     steps:
       - checkout
-      - run: docker-compose run composer install
-      - run: docker-compose run php70 ./vendor/bin/phpcs ./src
+      - run: php composer.phar install
+      - run: php ./vendor/bin/phpcs ./src
   test-php55:
     machine:  
       image: ubuntu-2004:202107-02    
