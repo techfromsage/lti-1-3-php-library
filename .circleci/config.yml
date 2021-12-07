@@ -6,7 +6,7 @@ jobs:
       - image: php:7.0-cli
     steps:
       - checkout
-      - run: composer install
+      - run: php composer.phar install
       - run: ./vendor/bin/phpcs ./src
   test-php55:
     machine:  
@@ -20,7 +20,7 @@ jobs:
       image: php:7.0-cli
     steps:
       - checkout
-      - run: composer install
+      - run: php composer.phar install
       - run: ./vendor/bin/phpunit tests/unit      
 
 workflows:
