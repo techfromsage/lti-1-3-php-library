@@ -5,10 +5,12 @@ jobs:
     docker:
       - image: docker:stable-git
       - image: php:7.0-cli
+        command: php
       - image: composer:latest
+        command: composer
     steps:
       - checkout
-      - run: php composer.phar install
+      - run: composer install
       - run: php ./vendor/bin/phpcs ./src
   test-php55:
     machine:  
