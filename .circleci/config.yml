@@ -3,6 +3,7 @@ version: 2.1
 jobs:
   linting:
     docker:
+      - image: docker:stable-git
       - image: php:7.0-cli
       - image: composer:latest
     steps:
