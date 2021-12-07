@@ -3,14 +3,10 @@ version: 2.1
 jobs:
   linting:
     docker:
-      - image: docker:stable-git
       - image: php:7.0-cli
-        command: php
-      - image: composer:latest
-        command: composer
     steps:
       - checkout
-      - run: composer install
+      - run: docker run -it --rm --name composer -v "$PWD:./src" composer:latest composer install
       - run: php ./vendor/bin/phpcs ./src
   test-php55:
     machine:  
