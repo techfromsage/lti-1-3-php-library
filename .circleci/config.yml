@@ -2,12 +2,12 @@ version: 2.1
 
 jobs:
   linting:
-    docker:
-      - image: docker:stable-git
+    machine:
+      image: ubuntu-2004:202107-02
     steps:
       - checkout
-      - run: docker run -it --rm --name composer -v "$PWD:./src" composer:latest composer install
-      - run: docker run -it --rm --name php "$PWD:./src" php:7.0-cli php ./vendor/bin/phpcs ./src
+      - run: docker-compose run composer install
+      - run: docker-compose run php70 ./vendor/bin/phpcs ./src
   test-php55:
     machine:  
       image: ubuntu-2004:202107-02    
@@ -16,8 +16,8 @@ jobs:
       - run: docker-compose run composer install
       - run: docker-compose run phpunit55 tests/unit
   test-php70:
-    docker:  
-      - image: docker:stable-git
+    machine:  
+      image: ubuntu-2004:202107-02    
     steps:
       - checkout
       - run: docker-compose run composer install
