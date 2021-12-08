@@ -51,9 +51,9 @@ class Cookie {
     /**
      * Add support for the PHP7.3+ `setcookie` with options, in a <PHP7.3-friendly way
      * 
-     *  @param string $name    The name of the cookie to set
-     *  @param mixed  $value   The cookie value 
-     *  @param array  $options Cookie options
+     * @param string $name    The name of the cookie to set
+     * @param mixed  $value   The cookie value 
+     * @param array  $options Cookie options
      * 
      * @return void
      */

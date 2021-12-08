@@ -6,8 +6,8 @@ interface Database {
     /**
      * Find an LTI_Registration based on the issuer and client id
      * 
-     *  @param string      $iss      Issuer identifier
-     *  @param string|null $clientId Client id
+     * @param string      $iss      Issuer identifier
+     * @param string|null $clientId Client id
      * 
      * @return LTI_Registration 
      */
@@ -16,10 +16,10 @@ interface Database {
     /**
      * Find an LTI_Deployment based on the issuer and deployment id
      * 
-     *  @param string $iss           Issuer identifier
-     *  @param string $deployment_id Deployment id
+     * @param string $iss           Issuer identifier
+     * @param string $deployment_id Deployment id
      * 
-     *  @return LTI_Deployment
+     * @return LTI_Deployment
      */    
     public function find_deployment($iss, $deployment_id);
 }
