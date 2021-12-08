@@ -6,7 +6,7 @@ interface Cache {
     /**
      * Returns the cached launch data JWT body, if it exists
      * 
-     * @param string $key  
+     * @param string|null $key  
      * 
      * @return string JWT body 
      */
@@ -15,8 +15,8 @@ interface Cache {
     /**
      * Stores the lauch data JWT body
      * 
-     *  @param string $key 
-     *  @param string $jwt_body 
+     * @param string $key 
+     * @param string $jwt_body 
      * 
      * @return $this
      */
