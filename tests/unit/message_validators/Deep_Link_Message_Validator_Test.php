@@ -2,6 +2,8 @@
 
 namespace IMSGlobal\LTI\Tests\unit\message_validators;
 
+include_once dirname(dirname(dirname(dirname(__FILE__)))) . '/src/lti/message_validators/deep_link_message_validator.php';
+
 use IMSGlobal\LTI\Deep_Link_Message_Validator;
 use IMSGlobal\LTI\LTI_Exception;
 use IMSGlobal\LTI\Tests\unit\TestBase;

@@ -2,6 +2,8 @@
 
 namespace IMSGlobal\LTI\Tests\unit\message_validators;
 
+include_once dirname(dirname(dirname(dirname(__FILE__)))) . '/src/lti/message_validators/resource_message_validator.php';
+
 use IMSGlobal\LTI\Resource_Message_Validator;
 use IMSGlobal\LTI\Tests\unit\TestBase;
 

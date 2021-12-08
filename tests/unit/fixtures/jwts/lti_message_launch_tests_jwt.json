@@ -1,0 +1,12 @@
+{
+    "iss": "aaa",
+    "aud": "12345",
+    "sub": "aaa_user_xyz",
+    "https://purl.imsglobal.org/spec/lti/claim/deployment_id": "aaa_12345",
+    "https://purl.imsglobal.org/spec/lti/claim/message_type": "LtiTestRequest",
+    "https://purl.imsglobal.org/spec/lti/claim/version": "1.3.0",
+    "https://purl.imsglobal.org/spec/lti/claim/roles": "http://purl.imsglobal.org/vocab/lis/v2/membership#Instructor",
+    "https://purl.imsglobal.org/spec/lti/claim/resource_link": {
+      "id": "aaa_12345"
+    }
+  }
