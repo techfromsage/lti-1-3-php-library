@@ -71,4 +71,3 @@ class Cookie {
         setcookie($name, $value, $expires, $pathWithSamesiteHack, $domain, $secure, $httponly);
     }
 }
-?>

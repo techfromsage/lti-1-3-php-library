@@ -16,8 +16,8 @@ interface Database {
     /**
      * Find an LTI_Deployment based on the issuer and deployment id
      * 
-     *  @param string      $iss           Issuer identifier
-     *  @param string      $deployment_id Deployment id
+     *  @param string $iss           Issuer identifier
+     *  @param string $deployment_id Deployment id
      * 
      *  @return LTI_Deployment
      */    

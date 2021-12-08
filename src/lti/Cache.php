@@ -6,7 +6,7 @@ interface Cache {
     /**
      * Returns the cached launch data JWT body, if it exists
      * 
-     *  @param string $key  
+     * @param string $key  
      * 
      * @return string JWT body 
      */
@@ -18,23 +18,23 @@ interface Cache {
      *  @param string $key 
      *  @param string $jwt_body 
      * 
-     * @return self
+     * @return $this
      */
     public function cache_launch_data($key, $jwt_body);
 
     /**
      * Stores the request nonce
      * 
-     *  @param string $nonce 
+     * @param string $nonce 
      * 
-     * @return self
+     * @return $this
      */
     public function cache_nonce($nonce);
 
     /**
      * Checks the validity of the nonce
      * 
-     *  @param string $nonce 
+     * @param string $nonce 
      * 
      * @return boolean 
      */

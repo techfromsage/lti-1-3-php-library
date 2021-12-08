@@ -4,11 +4,11 @@ namespace IMSGlobal\LTI;
 class LTI_Deep_Link_Resource {
 
     private $type = 'ltiResourceLink';
-    // @var string
+    /** @var string */
     private $title;
-    // @var string
+    /** @var string */
     private $url;
-    // @var LTI_Lineitem  
+    /** @var LTI_LineItem */
     private $lineitem;
     private $custom_params = [];
     private $target = 'iframe';

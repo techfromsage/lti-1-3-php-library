@@ -214,7 +214,6 @@ class LTI_Message_Launch_Test extends TestBase {
     {
         $jwt = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhYWEiLCJhdWQiOiIxMjM0NSIsInN1YiI6ImFhYV91c2VyX3h5eiIsImh0dHBzOi8vcHVybC5pbXNnbG9iYWwub3JnL3NwZWMvbHRpL2NsYWltL21lc3NhZ2VfdHlwZSI6Ikx0aVJlc291cmNlTGlua1JlcXVlc3QiLCJodHRwczovL3B1cmwuaW1zZ2xvYmFsLm9yZy9zcGVjL2x0aS9jbGFpbS92ZXJzaW9uIjoiMS4zLjAiLCJodHRwczovL3B1cmwuaW1zZ2xvYmFsLm9yZy9zcGVjL2x0aS9jbGFpbS9yb2xlcyI6Imh0dHA6Ly9wdXJsLmltc2dsb2JhbC5vcmcvdm9jYWIvbGlzL3YyL21lbWJlcnNoaXAjSW5zdHJ1Y3RvciIsImh0dHBzOi8vcHVybC5pbXNnbG9iYWwub3JnL3NwZWMvbHRpL2NsYWltL3Jlc291cmNlX2xpbmsiOnsiaWQiOiJhYWFfMTIzNDUifX0.xThL4I4H7WWY5hgS_sIkL_3iiVscoZ7oMtrt3TCrmhLHRMebDFOGz_B_23q1DGxWtvFB3Rahw8ZAUT9q8OPPZsRIdk_7m0XCEOJeu1RM1NfCnrNWQbgbkkglYGOU64EjllbkxjVWoNyUn4A50DbDVbfG--T7kfhQC6A4XQlQpss8TY_JzmRJLFg071WuvwbvL2MxPQOztomvi2ndvs_jhmEEw1Wswiog1ZvBssmILoq0zFTJXoAOhBVZmjzBMYT3OPzk_FvM8NDRQaDemPzNATeh0ndmmNTCbNnO8HuHlB8gRyFSFza_O_fduSipRyOXle-nb6q7NED6AecAdWYt5w';
         $state = uniqid();
-        // $this->setExpectedException('\IMSGlobal\LTI\LTI_Exception', 'Invalid message type');
         /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
         $cookie = $this->getMockBuilder('\IMSGlobal\LTI\Cookie')
             ->setMethods(['get_cookie'])

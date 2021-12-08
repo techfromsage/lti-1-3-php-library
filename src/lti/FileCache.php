@@ -19,7 +19,7 @@ class FileCache implements Cache {
      */
     public function get_launch_data($key) {
         $this->load_cache();
-        return $this->cache[$key];
+        return isset($this->cache[$key]) ? $this->cache[$key] : null; 
     }
 
     /**
@@ -28,7 +28,7 @@ class FileCache implements Cache {
      * @param string $key 
      * @param string $jwt_body 
      * 
-     * @return Cache 
+     * @return $this 
      */
     public function cache_launch_data($key, $jwt_body) {
         $this->cache[$key] = $jwt_body;
@@ -41,7 +41,7 @@ class FileCache implements Cache {
      * 
      * @param string $nonce 
      * 
-     * @return Cache 
+     * @return $this
      */
     public function cache_nonce($nonce) {
         $this->cache['nonce'][$nonce] = true;
@@ -87,4 +87,3 @@ class FileCache implements Cache {
         file_put_contents(sys_get_temp_dir() . '/lti_cache.txt', json_encode($this->cache));
     }
 }
-?>
