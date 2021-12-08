@@ -1,6 +1,6 @@
 <?php
 
-namespace IMSGlobal\LTI\Tests\unit;
+namespace IMSGlobal\LTI\Tests\unit\helpers;
 
 use IMSGlobal\LTI\Database;
 use IMSGlobal\LTI\LTI_Registration;
@@ -9,8 +9,8 @@ use IMSGlobal\LTI\LTI_Deployment;
 class DummyDatabase implements Database {
     public function find_registration_by_issuer($iss, $clientId = null)
     {
-        $privateKeyFileContents = file_get_contents(dirname(__FILE__) . '/fixtures/private.key');
-        $registrationDBFile = file_get_contents(dirname(__FILE__) . '/fixtures/registration_db.json');
+        $privateKeyFileContents = file_get_contents(dirname(dirname(__FILE__)) . '/fixtures/private.key');
+        $registrationDBFile = file_get_contents(dirname(dirname(__FILE__)) . '/fixtures/registration_db.json');
         $details = null;
         if ($registrationDBFile) {
             $registrations = json_decode($registrationDBFile, true);

@@ -5,6 +5,7 @@ namespace IMSGlobal\LTI\Tests\unit;
 use IMSGlobal\LTI\Cookie;
 use IMSGlobal\LTI\LTI_OIDC_Login;
 use IMSGlobal\LTI\Redirect;
+use IMSGlobal\LTI\Tests\unit\helpers\DummyDatabase;
 use IMSGlobal\LTI\Tests\unit\helpers\InMemoryCache;
 
 class LTI_OIDC_Login_Test extends TestBase {

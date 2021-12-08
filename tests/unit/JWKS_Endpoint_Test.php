@@ -3,6 +3,7 @@
 namespace IMSGlobal\LTI\Tests\unit;
 
 use IMSGlobal\LTI\JWKS_Endpoint;
+use IMSGlobal\LTI\Tests\unit\helpers\DummyDatabase;
 use IMSGlobal\LTI\Tests\unit\helpers\MockLTIRegistration;
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_Exception;
@@ -90,7 +91,7 @@ class JWKS_Endpoint_Test extends TestBase {
     /**
      * Generates a mock registration database
      * 
-     * @return PHPUnit_Framework_MockObject_MockObject|\IMSGlobal\LTI\Tests\unit\DummyDatabase
+     * @return PHPUnit_Framework_MockObject_MockObject|DummyDatabase
      * 
      * @throws PHPUnit_Framework_Exception 
      */

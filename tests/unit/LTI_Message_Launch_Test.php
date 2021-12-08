@@ -5,6 +5,7 @@ namespace IMSGlobal\LTI\Tests\unit;
 use Firebase\JWT\JWT;
 use IMSGlobal\LTI\Cookie;
 use IMSGlobal\LTI\LTI_Message_Launch;
+use IMSGlobal\LTI\Tests\unit\helpers\DummyDatabase;
 use IMSGlobal\LTI\Tests\unit\helpers\InMemoryCache;
 
 class LTI_Message_Launch_Test extends TestBase {
@@ -145,7 +146,7 @@ class LTI_Message_Launch_Test extends TestBase {
             ->getMock();
         
         /** @var DummyDatabase|\PHPUnit_Framework_MockObject_MockObject */
-        $registrationDatabase = $this->getMockBuilder('\IMSGlobal\LTI\Tests\unit\DummyDatabase')
+        $registrationDatabase = $this->getMockBuilder(DummyDatabase::class)
             ->setMethods(['find_registration_by_issuer'])
             ->getMock();
         
