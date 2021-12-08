@@ -6,9 +6,9 @@ interface Cache {
     /**
      * Returns the cached launch data JWT body, if it exists
      * 
-     * @param string|null $key  
+     * @param string $key  
      * 
-     * @return string JWT body 
+     * @return string|null JWT body 
      */
     public function get_launch_data($key);
 
