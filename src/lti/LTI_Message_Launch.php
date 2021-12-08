@@ -19,9 +19,9 @@ class LTI_Message_Launch {
     /**
      * Constructor
      *
-     * @param Database  $database Instance of the database interface used for looking up registrations and deployments.
-     * @param Cache     $cache    Instance of the Cache interface used to loading and storing launches. If none is provided launch data will be stored in FileCache.
-     * @param Cookie    $cookie   Instance of Cookie used to set and read cookies.
+     * @param Database $database Instance of the database interface used for looking up registrations and deployments.
+     * @param Cache    $cache    Instance of the Cache interface used to loading and storing launches. If none is provided launch data will be stored in FileCache.
+     * @param Cookie   $cookie   Instance of Cookie used to set and read cookies.
      */
     public function __construct(Database $database, Cache $cache = null, Cookie $cookie = null) {
         $this->db = $database;
@@ -42,9 +42,9 @@ class LTI_Message_Launch {
     /**
      * Static function to allow for method chaining without having to assign to a variable first.
      *
-     * @param Database  $database Instance of the database interface used for looking up registrations and deployments.
-     * @param Cache     $cache    Instance of the Cache interface used to loading and storing launches. If none is provided launch data will be stores in FileCache.
-     * @param Cookie    $cookie   Instance of Cookie used to set and read cookies.
+     * @param Database $database Instance of the database interface used for looking up registrations and deployments.
+     * @param Cache    $cache    Instance of the Cache interface used to loading and storing launches. If none is provided launch data will be stores in FileCache.
+     * @param Cookie   $cookie   Instance of Cookie used to set and read cookies.
      * 
      * @return self 
      */

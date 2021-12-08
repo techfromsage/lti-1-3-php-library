@@ -3,7 +3,7 @@ namespace IMSGlobal\LTI;
 
 class LTI_Deployment {
 
-    // @var string
+    /** @var string */ 
     private $deployment_id;
 
     /**
