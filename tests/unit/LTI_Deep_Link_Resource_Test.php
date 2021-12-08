@@ -8,7 +8,7 @@ use PHPUnit_Framework_ExpectationFailedException;
 class LTI_Deep_Link_Resource_Test extends TestBase {
     public function testNewInstance()
     {
-        $this->assertInstanceOf('IMSGlobal\LTI\LTI_Deep_Link_Resource', LTI_Deep_Link_Resource::newInstance());
+        $this->assertInstanceOf(LTI_Deep_Link_Resource::class, LTI_Deep_Link_Resource::newInstance());
     }    
 
     /**      
@@ -27,7 +27,7 @@ class LTI_Deep_Link_Resource_Test extends TestBase {
         // default
         $this->assertEquals('ltiResourceLink', $deepLinkResource->get_type());
 
-        $this->assertInstanceOf('IMSGlobal\LTI\LTI_Deep_Link_Resource', $deepLinkResource->set_type($type));
+        $this->assertInstanceOf(LTI_Deep_Link_Resource::class, $deepLinkResource->set_type($type));
         $this->assertEquals($type, $deepLinkResource->get_type());
     }
 
@@ -58,7 +58,7 @@ class LTI_Deep_Link_Resource_Test extends TestBase {
         // default
         $this->assertEquals('iframe', $deepLinkResource->get_target());
 
-        $this->assertInstanceOf('IMSGlobal\LTI\LTI_Deep_Link_Resource', $deepLinkResource->set_target($target));
+        $this->assertInstanceOf(LTI_Deep_Link_Resource::class, $deepLinkResource->set_target($target));
         $this->assertEquals($target, $deepLinkResource->get_target());        
     }
 
@@ -78,12 +78,12 @@ class LTI_Deep_Link_Resource_Test extends TestBase {
         $deepLinkResource = LTI_Deep_Link_Resource::newInstance();
         
         $this->assertEmpty($deepLinkResource->get_title());
-        $this->assertInstanceOf('IMSGlobal\LTI\LTI_Deep_Link_Resource', $deepLinkResource->set_title('A title'));
+        $this->assertInstanceOf(LTI_Deep_Link_Resource::class, $deepLinkResource->set_title('A title'));
         $this->assertEquals('A title', $deepLinkResource->get_title());
 
         $this->assertEmpty($deepLinkResource->get_url());
         $this->assertInstanceOf(
-            'IMSGlobal\LTI\LTI_Deep_Link_Resource', 
+            LTI_Deep_Link_Resource::class, 
             $deepLinkResource->set_url('https://example.com/resource/123')
         );
         $this->assertEquals('https://example.com/resource/123', $deepLinkResource->get_url());        
@@ -91,7 +91,7 @@ class LTI_Deep_Link_Resource_Test extends TestBase {
         // Default
         $this->assertEquals([], $deepLinkResource->get_custom_params());
         $this->assertInstanceOf(
-            'IMSGlobal\LTI\LTI_Deep_Link_Resource', 
+            LTI_Deep_Link_Resource::class, 
             $deepLinkResource->set_custom_params(['foo' => 'bar', 'bar' => 'baz'])
         );
         $this->assertEquals(['foo' => 'bar', 'bar' => 'baz'], $deepLinkResource->get_custom_params());

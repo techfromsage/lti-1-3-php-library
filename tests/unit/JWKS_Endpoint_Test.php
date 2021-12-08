@@ -22,7 +22,7 @@ class JWKS_Endpoint_Test extends TestBase {
     {
         $kid = uniqid();
         $keys = [$kid => $this->privateKey];
-        $this->assertInstanceOf('IMSGlobal\LTI\JWKS_Endpoint', JWKS_Endpoint::newInstance($keys));
+        $this->assertInstanceOf(JWKS_Endpoint::class, JWKS_Endpoint::newInstance($keys));
     }
 
     public function testNewInstanceFromIssuerAndClientId()
@@ -41,7 +41,7 @@ class JWKS_Endpoint_Test extends TestBase {
             ->willReturn($registration);
 
         $jwksEndpoint = JWKS_Endpoint::from_issuer($database, $issuer, $clientId);
-        $this->assertInstanceOf('IMSGlobal\LTI\JWKS_Endpoint', $jwksEndpoint);
+        $this->assertInstanceOf(JWKS_Endpoint::class, $jwksEndpoint);
 
         $jwks = $jwksEndpoint->get_public_jwks();
         $this->assertArrayHasKey('keys', $jwks);
@@ -57,7 +57,7 @@ class JWKS_Endpoint_Test extends TestBase {
 
 
         $jwksEndpoint = JWKS_Endpoint::from_registration($registration);
-        $this->assertInstanceOf('IMSGlobal\LTI\JWKS_Endpoint', $jwksEndpoint);
+        $this->assertInstanceOf(JWKS_Endpoint::class, $jwksEndpoint);
 
         $jwks = $jwksEndpoint->get_public_jwks();
         $this->assertArrayHasKey('keys', $jwks);
@@ -96,7 +96,7 @@ class JWKS_Endpoint_Test extends TestBase {
      */
     private function getMockRegistrationDatabase()
     {
-        return $this->getMockBuilder('\IMSGlobal\LTI\Tests\unit\DummyDatabase')
+        return $this->getMockBuilder(DummyDatabase::class)
             ->setMethods(['find_registration_by_issuer'])
             ->getMock();
     }

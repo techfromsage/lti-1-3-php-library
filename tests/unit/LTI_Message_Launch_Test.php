@@ -22,7 +22,7 @@ class LTI_Message_Launch_Test extends TestBase {
     public function testNewInstance()
     {
         $this->assertInstanceOf(
-            'IMSGlobal\LTI\LTI_Message_Launch', 
+            LTI_Message_Launch::class, 
             LTI_Message_Launch::newInstance(
                 new DummyDatabase()
             )
@@ -33,7 +33,7 @@ class LTI_Message_Launch_Test extends TestBase {
     {
         $this->setExpectedException('\IMSGlobal\LTI\LTI_Exception', 'State not found');
         /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
-        $cookie = $this->getMockBuilder('\IMSGlobal\LTI\Cookie')
+        $cookie = $this->getMockBuilder(Cookie::class)
             ->setMethods(['get_cookie'])
             ->getMock();
 
@@ -51,7 +51,7 @@ class LTI_Message_Launch_Test extends TestBase {
         $state = uniqid();
         $this->setExpectedException('\IMSGlobal\LTI\LTI_Exception', 'Missing id_token');
         /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
-        $cookie = $this->getMockBuilder('\IMSGlobal\LTI\Cookie')
+        $cookie = $this->getMockBuilder(Cookie::class)
             ->setMethods(['get_cookie'])
             ->getMock();
 
@@ -69,14 +69,14 @@ class LTI_Message_Launch_Test extends TestBase {
         $state = uniqid();
         $this->setExpectedException('\Exception', 'Invalid signature on id_token');
         /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
-        $cookie = $this->getMockBuilder('\IMSGlobal\LTI\Cookie')
+        $cookie = $this->getMockBuilder(Cookie::class)
             ->setMethods(['get_cookie'])
             ->getMock();
 
         $cookie->expects($this->atLeastOnce())->method('get_cookie')->with('lti1p3_' . $state)->willReturn($state);
 
         /** @var LTI_Message_Launch|\PHPUnit_Framework_MockObject_MockObject */
-        $messageLaunch = $this->getMockBuilder('\IMSGlobal\LTI\LTI_Message_Launch')
+        $messageLaunch = $this->getMockBuilder(LTI_Message_Launch::class)
             ->setMethods(['get_public_key'])
             ->setConstructorArgs(
                 [new DummyDatabase(), new InMemoryCache(), $cookie]
@@ -94,7 +94,7 @@ class LTI_Message_Launch_Test extends TestBase {
         $state = uniqid();
         $this->setExpectedException('\IMSGlobal\LTI\LTI_Exception', 'Invalid id_token, JWT must contain 3 parts');
         /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
-        $cookie = $this->getMockBuilder('\IMSGlobal\LTI\Cookie')
+        $cookie = $this->getMockBuilder(Cookie::class)
             ->setMethods(['get_cookie'])
             ->getMock();
 
@@ -113,13 +113,13 @@ class LTI_Message_Launch_Test extends TestBase {
         $state = uniqid();
         $this->setExpectedException('\IMSGlobal\LTI\LTI_Exception', 'Invalid signature on id_token');
         /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
-        $cookie = $this->getMockBuilder('\IMSGlobal\LTI\Cookie')
+        $cookie = $this->getMockBuilder(Cookie::class)
             ->setMethods(['get_cookie'])
             ->getMock();
 
         $cookie->expects($this->atLeastOnce())->method('get_cookie')->with('lti1p3_' . $state)->willReturn($state);
         /** @var LTI_Message_Launch|\PHPUnit_Framework_MockObject_MockObject */
-        $messageLaunch = $this->getMockBuilder('\IMSGlobal\LTI\LTI_Message_Launch')
+        $messageLaunch = $this->getMockBuilder(LTI_Message_Launch::class)
             ->setMethods(['get_public_key'])
             ->setConstructorArgs(
                 [new DummyDatabase(), new InMemoryCache(), $cookie]
@@ -140,7 +140,7 @@ class LTI_Message_Launch_Test extends TestBase {
         $state = uniqid();
         $this->setExpectedException('\Exception', 'Registration not found.');
         /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
-        $cookie = $this->getMockBuilder('\IMSGlobal\LTI\Cookie')
+        $cookie = $this->getMockBuilder(Cookie::class)
             ->setMethods(['get_cookie'])
             ->getMock();
         
@@ -156,7 +156,7 @@ class LTI_Message_Launch_Test extends TestBase {
 
         $cookie->expects($this->atLeastOnce())->method('get_cookie')->with('lti1p3_' . $state)->willReturn($state);
         /** @var LTI_Message_Launch|\PHPUnit_Framework_MockObject_MockObject */
-        $messageLaunch = $this->getMockBuilder('\IMSGlobal\LTI\LTI_Message_Launch')
+        $messageLaunch = $this->getMockBuilder(LTI_Message_Launch::class)
             ->setMethods(['get_public_key'])
             ->setConstructorArgs(
                 [$registrationDatabase, new InMemoryCache(), $cookie]
@@ -175,13 +175,13 @@ class LTI_Message_Launch_Test extends TestBase {
         $state = uniqid();
         $this->setExpectedException('\IMSGlobal\LTI\LTI_Exception', 'Client id not registered for this issuer');
         /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
-        $cookie = $this->getMockBuilder('\IMSGlobal\LTI\Cookie')
+        $cookie = $this->getMockBuilder(Cookie::class)
             ->setMethods(['get_cookie'])
             ->getMock();
 
         $cookie->expects($this->atLeastOnce())->method('get_cookie')->with('lti1p3_' . $state)->willReturn($state);
         /** @var LTI_Message_Launch|\PHPUnit_Framework_MockObject_MockObject */
-        $messageLaunch = $this->getMockBuilder('\IMSGlobal\LTI\LTI_Message_Launch')
+        $messageLaunch = $this->getMockBuilder(LTI_Message_Launch::class)
             ->setMethods(['get_public_key'])
             ->setConstructorArgs(
                 [new DummyDatabase(), new InMemoryCache(), $cookie]
@@ -199,13 +199,13 @@ class LTI_Message_Launch_Test extends TestBase {
         $state = uniqid();
         $this->setExpectedException('\IMSGlobal\LTI\LTI_Exception', 'Invalid signature on id_token');
         /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
-        $cookie = $this->getMockBuilder('\IMSGlobal\LTI\Cookie')
+        $cookie = $this->getMockBuilder(Cookie::class)
             ->setMethods(['get_cookie'])
             ->getMock();
 
         $cookie->expects($this->atLeastOnce())->method('get_cookie')->with('lti1p3_' . $state)->willReturn($state);
         /** @var LTI_Message_Launch|\PHPUnit_Framework_MockObject_MockObject */
-        $messageLaunch = $this->getMockBuilder('\IMSGlobal\LTI\LTI_Message_Launch')
+        $messageLaunch = $this->getMockBuilder(LTI_Message_Launch::class)
             ->setMethods(['get_public_key', 'import_validators'])
             ->setConstructorArgs(
                 [new DummyDatabase(), new InMemoryCache(), $cookie]
@@ -246,13 +246,13 @@ class LTI_Message_Launch_Test extends TestBase {
         $jwt = $this->encodeJWT($this->getValidJWTPayload());
         $state = uniqid();
         /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
-        $cookie = $this->getMockBuilder('\IMSGlobal\LTI\Cookie')
+        $cookie = $this->getMockBuilder(Cookie::class)
             ->setMethods(['get_cookie'])
             ->getMock();
 
         $cookie->expects($this->atLeastOnce())->method('get_cookie')->with('lti1p3_' . $state)->willReturn($state);
         /** @var LTI_Message_Launch|\PHPUnit_Framework_MockObject_MockObject */
-        $messageLaunch = $this->getMockBuilder('\IMSGlobal\LTI\LTI_Message_Launch')
+        $messageLaunch = $this->getMockBuilder(LTI_Message_Launch::class)
             ->setMethods(['get_public_key', 'import_validators'])
             ->setConstructorArgs(
                 [new DummyDatabase(), new InMemoryCache(), $cookie]
@@ -283,13 +283,13 @@ class LTI_Message_Launch_Test extends TestBase {
         $state = uniqid();
         $this->setExpectedException('\IMSGlobal\LTI\LTI_Exception', 'Message validation failed');
         /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
-        $cookie = $this->getMockBuilder('\IMSGlobal\LTI\Cookie')
+        $cookie = $this->getMockBuilder(Cookie::class)
             ->setMethods(['get_cookie'])
             ->getMock();
 
         $cookie->expects($this->atLeastOnce())->method('get_cookie')->with('lti1p3_' . $state)->willReturn($state);
         /** @var LTI_Message_Launch|\PHPUnit_Framework_MockObject_MockObject */
-        $messageLaunch = $this->getMockBuilder('\IMSGlobal\LTI\LTI_Message_Launch')
+        $messageLaunch = $this->getMockBuilder(LTI_Message_Launch::class)
             ->setMethods(['get_public_key', 'import_validators'])
             ->setConstructorArgs(
                 [new DummyDatabase(), new InMemoryCache(), $cookie]
@@ -321,13 +321,13 @@ class LTI_Message_Launch_Test extends TestBase {
         $state = uniqid();
         $this->setExpectedException('\IMSGlobal\LTI\LTI_Exception', 'Validator conflict');
         /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
-        $cookie = $this->getMockBuilder('\IMSGlobal\LTI\Cookie')
+        $cookie = $this->getMockBuilder(Cookie::class)
             ->setMethods(['get_cookie'])
             ->getMock();
 
         $cookie->expects($this->atLeastOnce())->method('get_cookie')->with('lti1p3_' . $state)->willReturn($state);
         /** @var LTI_Message_Launch|\PHPUnit_Framework_MockObject_MockObject */
-        $messageLaunch = $this->getMockBuilder('\IMSGlobal\LTI\LTI_Message_Launch')
+        $messageLaunch = $this->getMockBuilder(LTI_Message_Launch::class)
             ->setMethods(['get_public_key', 'import_validators'])
             ->setConstructorArgs(
                 [new DummyDatabase(), new InMemoryCache(), $cookie]

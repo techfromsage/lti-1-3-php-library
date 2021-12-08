@@ -7,14 +7,14 @@ use IMSGlobal\LTI\LTI_Registration;
 class LTI_Registration_Test extends TestBase {
     public function testNewInstance()
     {
-        $this->assertInstanceOf('IMSGlobal\LTI\LTI_Registration', LTI_Registration::newInstance());
+        $this->assertInstanceOf(LTI_Registration::class, LTI_Registration::newInstance());
     }
 
     public function testSetGetKid()
     {
         $kid = uniqid();
         $registration = LTI_Registration::newInstance()->set_kid($kid);
-        $this->assertInstanceOf('IMSGlobal\LTI\LTI_Registration', $registration);
+        $this->assertInstanceOf(LTI_Registration::class, $registration);
         $this->assertEquals($kid, $registration->get_kid());
     }
 

@@ -2,14 +2,17 @@
 
 namespace IMSGlobal\LTI\Tests\unit;
 
+use IMSGlobal\LTI\Cookie;
 use IMSGlobal\LTI\LTI_OIDC_Login;
+use IMSGlobal\LTI\Redirect;
+use IMSGlobal\LTI\Tests\unit\helpers\InMemoryCache;
 
 class LTI_OIDC_Login_Test extends TestBase {
     private $launchUrl = 'https://example.com/lti1p3/launch';
 
     public function testNewInstance()
     {
-        $this->assertInstanceOf('IMSGlobal\LTI\LTI_OIDC_Login', LTI_OIDC_Login::newInstance(
+        $this->assertInstanceOf(LTI_OIDC_Login::class, LTI_OIDC_Login::newInstance(
             new DummyDatabase()
         ));
     }  
@@ -44,7 +47,7 @@ class LTI_OIDC_Login_Test extends TestBase {
         $this->setExpectedException('IMSGlobal\LTI\OIDC_Exception', 'Could not find registration details');
 
         /** @var DummyDatabase|\PHPUnit_Framework_MockObject_MockObject */
-        $registrationDatabase = $this->getMockBuilder('\IMSGlobal\LTI\Tests\unit\DummyDatabase')
+        $registrationDatabase = $this->getMockBuilder(DummyDatabase::class)
             ->setMethods(['find_registration_by_issuer'])
             ->getMock();
         
@@ -64,8 +67,8 @@ class LTI_OIDC_Login_Test extends TestBase {
     
     public function testDoOidcLoginRedirect()
     {
-        /** @var \IMSGlobal\LTI\Tests\unit\helpers\InMemoryCache|\PHPUnit_Framework_MockObject_MockObject */
-        $cache = $this->getMockBuilder('\IMSGlobal\LTI\Tests\unit\helpers\InMemoryCache')
+        /** @var InMemoryCache|\PHPUnit_Framework_MockObject_MockObject */
+        $cache = $this->getMockBuilder(InMemoryCache::class)
             ->setMethods(['cache_nonce'])
             ->getMock();
         
@@ -73,8 +76,8 @@ class LTI_OIDC_Login_Test extends TestBase {
             $this->stringStartsWith('nonce-')
         );
         
-        /** @var \IMSGlobal\LTI\Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
-        $cookie = $this->getMockBuilder('\IMSGlobal\LTI\Cookie')
+        /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
+        $cookie = $this->getMockBuilder(Cookie::class)
             ->setMethods(['set_cookie'])
             ->getMock();
         
@@ -96,7 +99,7 @@ class LTI_OIDC_Login_Test extends TestBase {
             ]
         );   
         
-        $this->assertInstanceOf('\IMSGlobal\LTI\Redirect', $redirect);
+        $this->assertInstanceOf(Redirect::class, $redirect);
 
         $redirectUrl = parse_url($redirect->get_redirect_url());
 

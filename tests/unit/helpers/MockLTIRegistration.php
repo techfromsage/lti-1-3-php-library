@@ -2,6 +2,7 @@
 
 namespace IMSGlobal\LTI\Tests\unit\helpers;
 
+use IMSGlobal\LTI\LTI_Registration;
 use PHPUnit_Framework_MockObject_MockObject;
 
 trait MockLTIRegistration {
@@ -14,7 +15,7 @@ trait MockLTIRegistration {
      */
     protected function getMockLTIRegistration()
     {
-        return $this->getMockBuilder('\IMSGlobal\LTI\LTI_Registration')
+        return $this->getMockBuilder(LTI_Registration::class)
             ->setMethods(['get_kid', 'get_tool_private_key'])
             ->getMock();
     }    
