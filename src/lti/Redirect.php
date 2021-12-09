@@ -77,5 +77,4 @@ class Redirect {
         </script>
         <?php
     }
-
 }

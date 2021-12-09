@@ -102,5 +102,4 @@ class JWKS_Endpoint {
     public function output_jwks() {
         echo json_encode($this->get_public_jwks());
     }
-
 }
