@@ -1,0 +1,10 @@
+[
+    {
+        "issuer": "aaa",
+        "client_id": "12345",
+        "deployment_id": "aaa-12345",
+        "auth_login_url": "https://example.com/lti1p3/aaa/12345/auth_login_url",
+        "auth_token_url": "https://example.com/lti1p3/aaa/12345/auth_token_url",
+        "key_set_url": "https://example.com/lti1p3/aaa/12345/key_set_url"                
+    }
+]

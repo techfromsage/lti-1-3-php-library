@@ -10,7 +10,7 @@ class LTI_Grade_Submission_Review {
     /**
      * Static function to allow for method chaining without having to assign to a variable first.
      */
-    public static function new() {
+    public static function newInstance() {
         return new LTI_Grade_Submission_Review();
     }
 
@@ -59,4 +59,3 @@ class LTI_Grade_Submission_Review {
         ]));
     }
 }
-?>

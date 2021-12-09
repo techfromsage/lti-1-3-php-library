@@ -26,4 +26,3 @@ class Submission_Review_Message_Validator implements Message_Validator {
         return true;
     }
 }
-?>

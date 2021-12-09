@@ -1,0 +1,35 @@
+version: 2.1
+
+jobs:
+  linting:
+    machine:
+      image: ubuntu-2004:202107-02
+    steps:
+      - checkout
+      - run: docker-compose run composer install
+      - run: docker-compose run php70 ./vendor/bin/phpcs ./src
+  test-php55:
+    machine:  
+      image: ubuntu-2004:202107-02    
+    steps:
+      - checkout
+      - run: docker-compose run composer install
+      - run: docker-compose run phpunit55 tests/unit
+  test-php70:
+    machine:  
+      image: ubuntu-2004:202107-02    
+    steps:
+      - checkout
+      - run: docker-compose run composer install
+      - run: docker-compose run phpunit70 tests/unit      
+
+workflows:
+  build_and_test:
+    jobs:    
+      - linting
+      - test-php55:
+          requires:
+            - linting
+      - test-php70:
+          requires:
+            - linting      

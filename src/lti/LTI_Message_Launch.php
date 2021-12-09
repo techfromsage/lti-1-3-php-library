@@ -19,17 +19,17 @@ class LTI_Message_Launch {
     /**
      * Constructor
      *
-     * @param Database  $database   Instance of the database interface used for looking up registrations and deployments.
-     * @param Cache     $cache      Instance of the Cache interface used to loading and storing launches. If non is provided launch data will be store in $_SESSION.
-     * @param Cookie    $cookie     Instance of the Cookie interface used to set and read cookies. Will default to using $_COOKIE and setcookie.
+     * @param Database $database Instance of the database interface used for looking up registrations and deployments.
+     * @param Cache    $cache    Instance of the Cache interface used to loading and storing launches. If none is provided launch data will be stored in FileCache.
+     * @param Cookie   $cookie   Instance of Cookie used to set and read cookies.
      */
-    function __construct(Database $database, Cache $cache = null, Cookie $cookie = null) {
+    public function __construct(Database $database, Cache $cache = null, Cookie $cookie = null) {
         $this->db = $database;
 
-        $this->launch_id = uniqid("lti1p3_launch_", true);
+        $this->launch_id = uniqid('lti1p3_launch_', true);
 
         if ($cache === null) {
-            $cache = new Cache();
+            $cache = new FileCache();
         }
         $this->cache = $cache;
 
@@ -41,8 +41,14 @@ class LTI_Message_Launch {
 
     /**
      * Static function to allow for method chaining without having to assign to a variable first.
+     *
+     * @param Database $database Instance of the database interface used for looking up registrations and deployments.
+     * @param Cache    $cache    Instance of the Cache interface used to loading and storing launches. If none is provided launch data will be stores in FileCache.
+     * @param Cookie   $cookie   Instance of Cookie used to set and read cookies.
+     * 
+     * @return LTI_Message_Launch
      */
-    public static function new(Database $database, Cache $cache = null, Cookie $cookie = null) {
+    public static function newInstance(Database $database, Cache $cache = null, Cookie $cookie = null) {
         return new LTI_Message_Launch($database, $cache, $cookie);
     }
 
@@ -205,7 +211,7 @@ class LTI_Message_Launch {
         return $this->launch_id;
     }
 
-    private function get_public_key() {
+    protected function get_public_key() {
         $key_set_url = $this->registration->get_key_set_url();
 
         // Download key set
@@ -213,7 +219,7 @@ class LTI_Message_Launch {
 
         if (empty($public_key_set)) {
             // Failed to fetch public keyset from URL.
-            throw new LTI_Exception("Failed to fetch public key", 1);
+            throw new LTI_Exception('Failed to fetch public key', 1);
         }
 
         // Find key used to sign the JWT (matches the KID in the header)
@@ -228,7 +234,7 @@ class LTI_Message_Launch {
         }
 
         // Could not find public key with a matching kid and alg.
-        throw new LTI_Exception("Unable to find public key", 1);
+        throw new LTI_Exception('Unable to find public key', 1);
     }
 
     private function cache_launch_data() {
@@ -238,9 +244,10 @@ class LTI_Message_Launch {
 
     private function validate_state() {
         // Check State for OIDC.
-        if ($this->cookie->get_cookie('lti1p3_' . $this->request['state']) !== $this->request['state']) {
+        $expectedState = $this->cookie->get_cookie('lti1p3_' . $this->request['state']);
+        if (empty($expectedState) || $expectedState !== $this->request['state']) {
             // Error if state doesn't match
-            throw new LTI_Exception("State not found", 1);
+            throw new LTI_Exception('State not found', 1);
         }
         return $this;
     }
@@ -249,7 +256,7 @@ class LTI_Message_Launch {
         $jwt = $this->request['id_token'];
 
         if (empty($jwt)) {
-            throw new LTI_Exception("Missing id_token", 1);
+            throw new LTI_Exception('Missing id_token', 1);
         }
 
         // Get parts of JWT.
@@ -257,7 +264,7 @@ class LTI_Message_Launch {
 
         if (count($jwt_parts) !== 3) {
             // Invalid number of parts in JWT.
-            throw new LTI_Exception("Invalid id_token, JWT must contain 3 parts", 1);
+            throw new LTI_Exception('Invalid id_token, JWT must contain 3 parts', 1);
         }
 
         // Decode JWT headers.
@@ -276,18 +283,21 @@ class LTI_Message_Launch {
     }
 
     private function validate_registration() {
-        // Find registration.
-        $this->registration = $this->db->find_registration_by_issuer($this->jwt['body']['iss']);
-
-        if (empty($this->registration)) {
-            throw new LTI_Exception("Registration not found.", 1);
+        if (empty($this->jwt['body']['iss'])) {
+            throw new LTI_Exception('Invalid issuer', 1);
         }
 
+        $client_id = $this->get_client_id_from_jwt();
+        // Find registration.
+        $this->registration = $this->db->find_registration_by_issuer($this->jwt['body']['iss'], $client_id);
+
+        if (empty($this->registration)) {
+            throw new LTI_Exception('Registration not found.', 1);
+        }
         // Check client id.
-        $client_id = is_array($this->jwt['body']['aud']) ? $this->jwt['body']['aud'][0] : $this->jwt['body']['aud'];
         if ( $client_id !== $this->registration->get_client_id()) {
             // Client not registered.
-            throw new LTI_Exception("Client id not registered for this issuer", 1);
+            throw new LTI_Exception('Client id not registered for this issuer', 1);
         }
 
         return $this;
@@ -299,23 +309,29 @@ class LTI_Message_Launch {
 
         // Validate JWT signature
         try {
-            JWT::decode($this->request['id_token'], $public_key['key'], array('RS256'));
+            JWT::decode($this->request['id_token'], $public_key['key'], ['RS256']);
         } catch(\Exception $e) {
-            var_dump($e);
             // Error validating signature.
-            throw new LTI_Exception("Invalid signature on id_token", 1);
+            throw new LTI_Exception('Invalid signature on id_token', 1);
         }
 
         return $this;
     }
 
     private function validate_deployment() {
+        if (empty($this->jwt['body']['https://purl.imsglobal.org/spec/lti/claim/deployment_id'])) {
+            throw new LTI_Exception('Invalid deployment');
+        } 
+        
         // Find deployment.
-        $deployment = $this->db->find_deployment($this->jwt['body']['iss'], $this->jwt['body']['https://purl.imsglobal.org/spec/lti/claim/deployment_id']);
+        $deployment = $this->db->find_deployment(
+            $this->jwt['body']['iss'], 
+            $this->jwt['body']['https://purl.imsglobal.org/spec/lti/claim/deployment_id']
+        );
 
         if (empty($deployment)) {
             // deployment not recognized.
-            throw new LTI_Exception("Unable to find deployment", 1);
+            throw new LTI_Exception('Unable to find deployment', 1);
         }
 
         return $this;
@@ -324,19 +340,17 @@ class LTI_Message_Launch {
     private function validate_message() {
         if (empty($this->jwt['body']['https://purl.imsglobal.org/spec/lti/claim/message_type'])) {
             // Unable to identify message type.
-            throw new LTI_Exception("Invalid message type", 1);
+            throw new LTI_Exception('Invalid message type', 1);
         }
 
         // Do message type validation
 
         // Import all validators
-        foreach (glob(__DIR__ . "/message_validators/*.php") as $filename) {
-            include_once $filename;
-        }
+        $this->import_validators();
 
         // Create instances of all validators
         $classes = get_declared_classes();
-        $validators = array();
+        $validators = [];
         foreach ($classes as $class_name) {
             // Check the class implements message validator
             $reflect = new \ReflectionClass($class_name);
@@ -351,22 +365,36 @@ class LTI_Message_Launch {
             if ($validator->can_validate($this->jwt['body'])) {
                 if ($message_validator !== false) {
                     // Can't have more than one validator apply at a time.
-                    throw new LTI_Exception("Validator conflict", 1);
+                    throw new LTI_Exception('Validator conflict', 1);
                 }
                 $message_validator = $validator;
             }
         }
 
         if ($message_validator === false) {
-            throw new LTI_Exception("Unrecognized message type.", 1);
+            throw new LTI_Exception('Unrecognized message type.', 1);
         }
 
         if (!$message_validator->validate($this->jwt['body'])) {
-            throw new LTI_Exception("Message validation failed.", 1);
+            throw new LTI_Exception('Message validation failed.', 1);
         }
 
         return $this;
 
     }
+
+    protected function import_validators()
+    {
+        foreach (glob(__DIR__ . '/message_validators/*.php') as $filename) {
+            include_once $filename;
+        }
+    }
+
+    private function get_client_id_from_jwt()
+    {
+        if (isset($this->jwt['body']['aud'])) {
+            return is_array($this->jwt['body']['aud']) ? $this->jwt['body']['aud'][0] : $this->jwt['body']['aud'];
+        }
+        return null;
+    }
 }
-?>

@@ -107,4 +107,3 @@ class LTI_Course_Groups_Service {
         return $groups_by_set;
     }
 }
-?>

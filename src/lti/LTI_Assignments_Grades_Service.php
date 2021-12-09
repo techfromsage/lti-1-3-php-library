@@ -22,7 +22,7 @@ class LTI_Assignments_Grades_Service {
         } else if ($lineitem === null && !empty($this->service_data['lineitem'])) {
             $score_url = $this->service_data['lineitem'] ;
         } else {
-            $lineitem = LTI_Lineitem::new()
+            $lineitem = LTI_Lineitem::newInstance()
             ->set_label('default')
             ->set_score_maximum(100);
             $lineitem = $this->find_or_create_lineitem($lineitem);
@@ -88,4 +88,3 @@ class LTI_Assignments_Grades_Service {
         return $scores['body'];
     }
 }
-?>

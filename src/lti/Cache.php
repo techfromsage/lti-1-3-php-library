@@ -1,46 +1,42 @@
 <?php
+
 namespace IMSGlobal\LTI;
 
-class Cache {
+interface Cache {
+    /**
+     * Returns the cached launch data JWT body, if it exists
+     * 
+     * @param string $key  
+     * 
+     * @return string|null JWT body 
+     */
+    public function get_launch_data($key);
 
-    private $cache;
+    /**
+     * Stores the lauch data JWT body
+     * 
+     * @param string $key 
+     * @param string $jwt_body 
+     * 
+     * @return $this
+     */
+    public function cache_launch_data($key, $jwt_body);
 
-    public function get_launch_data($key) {
-        $this->load_cache();
-        return $this->cache[$key];
-    }
+    /**
+     * Stores the request nonce
+     * 
+     * @param string $nonce 
+     * 
+     * @return $this
+     */
+    public function cache_nonce($nonce);
 
-    public function cache_launch_data($key, $jwt_body) {
-        $this->cache[$key] = $jwt_body;
-        $this->save_cache();
-        return $this;
-    }
-
-    public function cache_nonce($nonce) {
-        $this->cache['nonce'][$nonce] = true;
-        $this->save_cache();
-        return $this;
-    }
-
-    public function check_nonce($nonce) {
-        $this->load_cache();
-        if (!isset($this->cache['nonce'][$nonce])) {
-            return false;
-        }
-        return true;
-    }
-
-    private function load_cache() {
-        $cache = file_get_contents(sys_get_temp_dir() . '/lti_cache.txt');
-        if (empty($cache)) {
-            file_put_contents(sys_get_temp_dir() . '/lti_cache.txt', '{}');
-            $this->cache = [];
-        }
-        $this->cache = json_decode($cache, true);
-    }
-
-    private function save_cache() {
-        file_put_contents(sys_get_temp_dir() . '/lti_cache.txt', json_encode($this->cache));
-    }
+    /**
+     * Checks the validity of the nonce
+     * 
+     * @param string $nonce 
+     * 
+     * @return boolean 
+     */
+    public function check_nonce($nonce);
 }
-?>
