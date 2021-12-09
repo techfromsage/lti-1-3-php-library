@@ -174,4 +174,3 @@ class LTI_Deep_Link_Resource {
         return $resource;
     }
 }
-?>

@@ -23,5 +23,3 @@ interface Database {
      */    
     public function find_deployment($iss, $deployment_id);
 }
-
-?>

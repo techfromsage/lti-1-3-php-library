@@ -398,4 +398,3 @@ class LTI_Message_Launch {
         return null;
     }
 }
-?>

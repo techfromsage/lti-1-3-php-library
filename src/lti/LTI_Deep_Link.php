@@ -85,4 +85,3 @@ class LTI_Deep_Link {
         <?php
     }
 }
-?>

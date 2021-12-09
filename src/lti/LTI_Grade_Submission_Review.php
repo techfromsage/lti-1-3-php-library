@@ -59,4 +59,3 @@ class LTI_Grade_Submission_Review {
         ]));
     }
 }
-?>
