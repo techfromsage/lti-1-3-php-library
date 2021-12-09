@@ -46,7 +46,7 @@ class LTI_Message_Launch {
      * @param Cache    $cache    Instance of the Cache interface used to loading and storing launches. If none is provided launch data will be stores in FileCache.
      * @param Cookie   $cookie   Instance of Cookie used to set and read cookies.
      * 
-     * @return self 
+     * @return LTI_Message_Launch
      */
     public static function newInstance(Database $database, Cache $cache = null, Cookie $cookie = null) {
         return new LTI_Message_Launch($database, $cache, $cookie);

@@ -34,7 +34,7 @@ class LTI_OIDC_Login {
      * @param Cache    $cache    Instance of the Cache interface used to loading and storing launches. If non is provided launch data will be store in $_SESSION.
      * @param Cookie   $cookie   Instance of the Cookie interface used to set and read cookies. Will default to using $_COOKIE and setcookie.
      * 
-     * @return self
+     * @return LTI_OIDC_Login
      */
     public static function newInstance(Database $database, Cache $cache = null, Cookie $cookie = null) {
         return new LTI_OIDC_Login($database, $cache, $cookie);
