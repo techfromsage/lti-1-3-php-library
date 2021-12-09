@@ -7,11 +7,11 @@ use UnexpectedValueException;
 
 class LTI_Deep_Link {
 
-    // @var LTI_Registration
+    /** @var LTI_Registration */
     private $registration;
-    // @var string
+    /** @var string */
     private $deployment_id;
-    // @var array
+    /** @var array */
     private $deep_link_settings;
 
     /**
