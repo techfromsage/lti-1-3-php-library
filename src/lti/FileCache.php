@@ -15,7 +15,7 @@ class FileCache implements Cache {
      * 
      * @param string $key 
      * 
-     * @return string 
+     * @return string|null
      */
     public function get_launch_data($key) {
         $this->load_cache();
