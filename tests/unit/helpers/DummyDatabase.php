@@ -39,8 +39,7 @@ class DummyDatabase implements Database {
                 return $registration;
             }
         }
-
-        throw new \Exception('Cannot find issuer details in registrations file');
+        return null;
     }
 
     public function find_deployment($iss, $deployment_id)

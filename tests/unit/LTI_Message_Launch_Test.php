@@ -170,11 +170,11 @@ class LTI_Message_Launch_Test extends TestBase {
     public function testValidateRegistrationMismatchClientId()
     {
         $payload = $this->getValidJWTPayload();
-        unset($payload['aud']);
+        $payload['aud'] = uniqid();
 
         $jwt = $this->encodeJWT($payload);
         $state = uniqid();
-        $this->setExpectedException('\IMSGlobal\LTI\LTI_Exception', 'Client id not registered for this issuer');
+        $this->setExpectedException('\IMSGlobal\LTI\LTI_Exception', 'Registration not found');
         /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
         $cookie = $this->getMockBuilder(Cookie::class)
             ->setMethods(['get_cookie'])
@@ -191,6 +191,31 @@ class LTI_Message_Launch_Test extends TestBase {
 
         $messageLaunch->validate(['state' => $state, 'id_token' => $jwt]);     
     }  
+
+    public function testValidateRegistrationMissingClientId()
+    {
+        $payload = $this->getValidJWTPayload();
+        unset($payload['aud']);
+
+        $jwt = $this->encodeJWT($payload);
+        $state = uniqid();
+        $this->setExpectedException('\IMSGlobal\LTI\LTI_Exception', 'Invalid client id');
+        /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
+        $cookie = $this->getMockBuilder(Cookie::class)
+            ->setMethods(['get_cookie'])
+            ->getMock();
+
+        $cookie->expects($this->atLeastOnce())->method('get_cookie')->with('lti1p3_' . $state)->willReturn($state);
+        /** @var LTI_Message_Launch|\PHPUnit_Framework_MockObject_MockObject */
+        $messageLaunch = $this->getMockBuilder(LTI_Message_Launch::class)
+            ->setMethods(['get_public_key'])
+            ->setConstructorArgs(
+                [new DummyDatabase(), new InMemoryCache(), $cookie]
+            )
+            ->getMock();
+
+        $messageLaunch->validate(['state' => $state, 'id_token' => $jwt]);     
+    }      
     
     public function testValidateJwtSignature()
     {
