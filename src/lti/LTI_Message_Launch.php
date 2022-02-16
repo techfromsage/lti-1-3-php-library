@@ -288,6 +288,11 @@ class LTI_Message_Launch {
         }
 
         $client_id = $this->get_client_id_from_jwt();
+
+        if (empty($client_id)) {
+            throw new LTI_Exception('Invalid client id', 1);
+        }
+        
         // Find registration.
         $this->registration = $this->db->find_registration_by_issuer($this->jwt['body']['iss'], $client_id);
 
