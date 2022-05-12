@@ -5,6 +5,14 @@
         "deployment_id": "aaa-12345",
         "auth_login_url": "https://example.com/lti1p3/aaa/12345/auth_login_url",
         "auth_token_url": "https://example.com/lti1p3/aaa/12345/auth_token_url",
-        "key_set_url": "https://example.com/lti1p3/aaa/12345/key_set_url"                
+        "key_set_url": "https://example.com/lti1p3/aaa/12345/key_set_url"
+    },
+    {
+        "issuer": "bbb",
+        "aud": "aud_12345",
+        "deployment_id": "bbb-12345",
+        "auth_login_url": "https://example.com/lti1p3/bbb/aud_12345/auth_login_url",
+        "auth_token_url": "https://example.com/lti1p3/bbb/aud_12345/auth_token_url",
+        "key_set_url": "https://example.com/lti1p3/bbb/aud_12345/key_set_url"
     }
 ]

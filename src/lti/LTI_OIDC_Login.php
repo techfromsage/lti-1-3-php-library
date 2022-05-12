@@ -33,7 +33,7 @@ class LTI_OIDC_Login {
      * @param Database $database Instance of the database interface used for looking up registrations and deployments.
      * @param Cache    $cache    Instance of the Cache interface used to loading and storing launches. If non is provided launch data will be store in $_SESSION.
      * @param Cookie   $cookie   Instance of the Cookie interface used to set and read cookies. Will default to using $_COOKIE and setcookie.
-     * 
+     *
      * @return LTI_OIDC_Login
      */
     public static function newInstance(Database $database, Cache $cache = null, Cookie $cookie = null) {
@@ -112,7 +112,9 @@ class LTI_OIDC_Login {
             throw new OIDC_Exception("Could not find login hint", 1);
         }
 
+        // if request['aud'] use it, else try $request['client_id] else set to null;
         $clientId = isset($request['aud']) ? $request['aud'] : null;
+        $clientId = (empty($clientId) && isset($request['client_id'])) ? $request['client_id'] : null;
 
         // Fetch Registration Details.
         $registration = $this->db->find_registration_by_issuer($request['iss'], $clientId);
