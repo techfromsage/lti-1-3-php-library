@@ -155,7 +155,7 @@ class LTI_OIDC_Login_Test extends TestBase
             $request
         );
 
-        $expectedId = isset($request['aud']) ? $request['aud'] : $request['client_id'];
+        $expectedId = isset($request['client_id']) ? $request['client_id'] : $request['aud'];
 
         $this->assertInstanceOf(Redirect::class, $redirect);
 
@@ -182,6 +182,15 @@ class LTI_OIDC_Login_Test extends TestBase
                     'login_hint' => 'password123',
                     'lti_message_hint' => 'my message hint',
                     'aud' => 'aud_12345'
+                ]
+            ],
+            'clientId and aud present' => [
+                [
+                    'iss' => 'ccc',
+                    'login_hint' => 'password123',
+                    'lti_message_hint' => 'my message hint',
+                    'aud' => 'aud_12345',
+                    'client_id' => '12345'
                 ]
             ]
         ];

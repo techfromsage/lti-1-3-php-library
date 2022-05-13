@@ -1,4 +1,5 @@
 <?php
+
 namespace IMSGlobal\LTI;
 
 class LTI_OIDC_Login {
@@ -14,7 +15,8 @@ class LTI_OIDC_Login {
      * @param Cache    $cache    Instance of the Cache interface used to loading and storing launches. If non is provided launch data will be store in $_SESSION.
      * @param Cookie   $cookie   Instance of the Cookie interface used to set and read cookies. Will default to using $_COOKIE and setcookie.
      */
-    function __construct(Database $database, Cache $cache = null, Cookie $cookie = null) {
+    function __construct(Database $database, Cache $cache = null, Cookie $cookie = null)
+    {
         $this->db = $database;
         if ($cache === null) {
             $cache = new FileCache();
@@ -36,7 +38,8 @@ class LTI_OIDC_Login {
      *
      * @return LTI_OIDC_Login
      */
-    public static function newInstance(Database $database, Cache $cache = null, Cookie $cookie = null) {
+    public static function newInstance(Database $database, Cache $cache = null, Cookie $cookie = null)
+    {
         return new LTI_OIDC_Login($database, $cache, $cookie);
     }
 
@@ -48,7 +51,8 @@ class LTI_OIDC_Login {
      *
      * @return Redirect Returns a redirect object containing the fully formed OIDC login URL.
      */
-    public function do_oidc_login_redirect($launch_url, array $request = null) {
+    public function do_oidc_login_redirect($launch_url, array $request = null)
+    {
 
         if ($request === null) {
             $request = $_REQUEST;
@@ -100,7 +104,8 @@ class LTI_OIDC_Login {
 
     }
 
-    protected function validate_oidc_login($request) {
+    protected function validate_oidc_login($request)
+    {
 
         // Validate Issuer.
         if (empty($request['iss'])) {
@@ -112,9 +117,7 @@ class LTI_OIDC_Login {
             throw new OIDC_Exception("Could not find login hint", 1);
         }
 
-        // if request['aud'] use it, else try $request['client_id] else set to null;
-        $clientId = isset($request['aud']) ? $request['aud'] : null;
-        $clientId = (empty($clientId) && isset($request['client_id'])) ? $request['client_id'] : null;
+        $clientId = $this->getClientIdFromRequest($request);
 
         // Fetch Registration Details.
         $registration = $this->db->find_registration_by_issuer($request['iss'], $clientId);
@@ -126,5 +129,25 @@ class LTI_OIDC_Login {
 
         // Return Registration.
         return $registration;
+    }
+
+    /**
+     * Get the clientId from the request. If `client_id` and `aud` are present, then `client_id` has preference.
+     *
+     * @param array $request An array of request parameters.
+     *
+     * @return string|null
+     */
+    private function getClientIdFromRequest(array $request)
+    {
+        $clientId = null;
+
+        if (isset($request['client_id'])) {
+            $clientId = $request['client_id'];
+        } elseif (isset($request['aud'])) {
+            $clientId = $request['aud'];
+        }
+
+        return $clientId;
     }
 }
