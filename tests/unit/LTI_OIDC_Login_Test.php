@@ -4,6 +4,7 @@ namespace IMSGlobal\LTI\Tests\unit;
 
 use IMSGlobal\LTI\Cookie;
 use IMSGlobal\LTI\LTI_OIDC_Login;
+use IMSGlobal\LTI\OIDC_Exception;
 use IMSGlobal\LTI\Redirect;
 use IMSGlobal\LTI\Tests\unit\helpers\DummyDatabase;
 use IMSGlobal\LTI\Tests\unit\helpers\InMemoryCache;
@@ -21,14 +22,14 @@ class LTI_OIDC_Login_Test extends TestBase
 
     public function testDoOidcLoginRedirectEmptyLaunchUrl()
     {
-        $this->setExpectedException('IMSGlobal\LTI\OIDC_Exception', 'No launch URL configured');
+        $this->setExpectedException(OIDC_Exception::class, 'No launch URL configured');
 
         LTI_OIDC_Login::newInstance(new DummyDatabase())->do_oidc_login_redirect('');
     }
 
     public function testValidateOidcLoginNoIssuer()
     {
-        $this->setExpectedException('IMSGlobal\LTI\OIDC_Exception', 'Could not find issuer');
+        $this->setExpectedException(OIDC_Exception::class, 'Could not find issuer');
         LTI_OIDC_Login::newInstance(new DummyDatabase())->do_oidc_login_redirect(
             $this->launchUrl,
             []
@@ -37,7 +38,7 @@ class LTI_OIDC_Login_Test extends TestBase
 
     public function testValidateOidcLoginNoPasswordHint()
     {
-        $this->setExpectedException('IMSGlobal\LTI\OIDC_Exception', 'Could not find login hint');
+        $this->setExpectedException(OIDC_Exception::class, 'Could not find login hint');
         LTI_OIDC_Login::newInstance(new DummyDatabase())->do_oidc_login_redirect(
             $this->launchUrl,
             ['iss' => 'aaa']
@@ -46,7 +47,7 @@ class LTI_OIDC_Login_Test extends TestBase
 
     public function testValidateOidcLoginRegistrationNotFound()
     {
-        $this->setExpectedException('IMSGlobal\LTI\OIDC_Exception', 'Could not find registration details');
+        $this->setExpectedException(OIDC_Exception::class, 'Could not find registration details');
 
         /** @var DummyDatabase|\PHPUnit_Framework_MockObject_MockObject */
         $registrationDatabase = $this->getMockBuilder(DummyDatabase::class)
