@@ -6,6 +6,7 @@ include_once dirname(dirname(dirname(dirname(__FILE__)))) . '/src/lti/message_va
 
 use IMSGlobal\LTI\Deep_Link_Message_Validator;
 use IMSGlobal\LTI\LTI_Exception;
+use IMSGlobal\LTI\LTI_Message_Validation_Exception;
 use IMSGlobal\LTI\Tests\unit\TestBase;
 
 class Deep_Link_Message_Validator_Test extends TestBase {
@@ -62,7 +63,7 @@ class Deep_Link_Message_Validator_Test extends TestBase {
      */
     public function testValidateJwtBody($propertyToReplace, $replacementValue, $expectedExceptionMessage)
     {
-        $this->setExpectedException('IMSGlobal\LTI\LTI_Exception', $expectedExceptionMessage);
+        $this->setExpectedException(LTI_Message_Validation_Exception::class, $expectedExceptionMessage);
 
         $validator = new Deep_Link_Message_Validator();
         $this->jwtBody[$propertyToReplace] = $replacementValue;
@@ -96,7 +97,7 @@ class Deep_Link_Message_Validator_Test extends TestBase {
      */
     public function testValidateDeepLinkingSettings($propertyToReplace, $replacementValue, $expectedExceptionMessage)
     {
-        $this->setExpectedException('IMSGlobal\LTI\LTI_Exception', $expectedExceptionMessage);
+        $this->setExpectedException(LTI_Message_Validation_Exception::class, $expectedExceptionMessage);
 
         $validator = new Deep_Link_Message_Validator();
         $this->jwtBody['https://purl.imsglobal.org/spec/lti-dl/claim/deep_linking_settings'][$propertyToReplace] = $replacementValue;

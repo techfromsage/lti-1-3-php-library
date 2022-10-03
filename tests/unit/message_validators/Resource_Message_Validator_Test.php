@@ -4,6 +4,7 @@ namespace IMSGlobal\LTI\Tests\unit\message_validators;
 
 include_once dirname(dirname(dirname(dirname(__FILE__)))) . '/src/lti/message_validators/resource_message_validator.php';
 
+use IMSGlobal\LTI\LTI_Message_Validation_Exception;
 use IMSGlobal\LTI\Resource_Message_Validator;
 use IMSGlobal\LTI\Tests\unit\TestBase;
 
@@ -59,7 +60,7 @@ class Resource_Message_Validator_Test extends TestBase {
      */
     public function testValidateJwtBody($propertyToReplace, $replacementValue, $expectedExceptionMessage)
     {
-        $this->setExpectedException('IMSGlobal\LTI\LTI_Exception', $expectedExceptionMessage);
+        $this->setExpectedException(LTI_Message_Validation_Exception::class, $expectedExceptionMessage);
 
         $validator = new Resource_Message_Validator();
         $this->jwtBody[$propertyToReplace] = $replacementValue;
