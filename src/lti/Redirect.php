@@ -12,6 +12,10 @@ class Redirect {
         $this->referer_query = $referer_query;
     }
 
+    public function get_referer_query() {
+        return $this->referer_query;
+    }
+
     public function do_redirect() {
         header('Location: ' . $this->location, true, 302);
         die;
@@ -41,7 +45,7 @@ class Redirect {
         if (empty($this->referer_query)) {
             echo 'window.location.href';
          } else {
-            echo "window.location.origin + window.location.pathname + '?" . $this->referer_query . "'";
+            echo "window.location.origin + window.location.pathname + '?" . $this->get_referer_query() . "'";
         }
         ?>;
 
