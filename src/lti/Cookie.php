@@ -17,6 +17,10 @@ class Cookie {
         if (isset($_COOKIE["LEGACY_" . $name])) {
             return $_COOKIE["LEGACY_" . $name];
         }
+        // Look for backup cookie partitioned if same site is not supported by the user's browser.
+        if (isset($_COOKIE["PARTITIONED_" . $name])) {
+            return $_COOKIE["PARTITIONED_" . $name];
+        }
         return false;
     }
 
@@ -38,13 +42,26 @@ class Cookie {
         // SameSite none and secure will be required for tools to work inside iframes
         $same_site_options = [
             'samesite' => 'None',
-            'secure' => true
+            'secure' => true,
+            'partitioned' => true,
         ];
 
-        setcookie($name, $value, array_merge($cookie_options, $same_site_options, $options));
+        $merged_options = array_merge($cookie_options, $same_site_options, $options);
+
+        setcookie($name, $value, $merged_options);
 
         // Set a second fallback cookie in the event that "SameSite" is not supported
         setcookie("LEGACY_" . $name, $value, array_merge($cookie_options, $options));
+
+        // PHP does not support the 'partitioned' flag, so we need to manually set a partitioned cookie header
+        header('Set-Cookie: ' . rawurlencode("PARTITIONED_" . $name) . '=' . rawurlencode($value)
+                          . (empty($merged_options['expires']) ? '' : '; expires=' . gmdate('D, d-M-Y H:i:s', $merged_options['expires']) . ' GMT')
+                          . (empty($merged_options['path']) ? '' : '; path=' . $merged_options['path'])
+                          . (empty($merged_options['domain']) ? '' : '; domain=' . $merged_options['domain'])
+                          . (empty($merged_options['samesite']) ? '' : '; samesite=' . $merged_options['samesite'])
+                          . (empty($merged_options['secure']) ? '' : '; secure')
+                          . (empty($merged_options['partitioned']) ? '' : '; partitioned')
+                          . (empty($merged_options['http_only']) ? '' : '; HttpOnly'), false);
         return $this;
     }
 }
