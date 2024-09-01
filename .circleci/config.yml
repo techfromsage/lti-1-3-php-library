@@ -6,9 +6,9 @@ jobs:
       image: ubuntu-2204:2023.10.1
     steps:
       - checkout
-      - run: docker-compose run composer install
-      - run: docker-compose run php73 ./vendor/bin/phpcs ./src
-      - run: docker-compose run phpunit73 tests/unit
+      - run: docker compose run composer install
+      - run: docker compose run php73 ./vendor/bin/phpcs ./src
+      - run: docker compose run phpunit73 tests/unit
 
 workflows:
   build_and_test:
