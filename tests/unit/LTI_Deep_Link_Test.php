@@ -3,6 +3,7 @@
 namespace IMSGlobal\LTI\Tests\unit;
 
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use IMSGlobal\LTI\LTI_Deep_Link;
 use IMSGlobal\LTI\LTI_Deep_Link_Resource;
 use IMSGlobal\LTI\Tests\unit\helpers\MockLTIRegistration;
@@ -47,7 +48,7 @@ class LTI_Deep_Link_Test extends TestBase {
 
         $jwt = $deepLink->get_response_jwt([$deepLinkResource]);
 
-        $decodedJWT = JWT::decode($jwt, $this->publicKey, ['RS256']);
+        $decodedJWT = JWT::decode($jwt, new Key($this->publicKey, ['RS256']));
 
         $this->assertEquals($decodedJWT->iss, $clientId);
         $this->assertEquals($decodedJWT->aud, [$issuer]);
