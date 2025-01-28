@@ -315,7 +315,7 @@ class LTI_Message_Launch {
 
         // Validate JWT signature
         try {
-            JWT::decode($this->request['id_token'], new Key($public_key['key'], ['RS256']));
+            JWT::decode($this->request['id_token'], new Key($public_key['key'], 'RS256'));
         } catch(\Exception $e) {
             // Error validating signature.
             throw new LTI_JWT_Exception('Invalid signature on id_token');

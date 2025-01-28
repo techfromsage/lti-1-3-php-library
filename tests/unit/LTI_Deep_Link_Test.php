@@ -48,7 +48,7 @@ class LTI_Deep_Link_Test extends TestBase {
 
         $jwt = $deepLink->get_response_jwt([$deepLinkResource]);
 
-        $decodedJWT = JWT::decode($jwt, new Key($this->publicKey, ['RS256']));
+        $decodedJWT = JWT::decode($jwt, new Key($this->publicKey, 'RS256'));
 
         $this->assertEquals($decodedJWT->iss, $clientId);
         $this->assertEquals($decodedJWT->aud, [$issuer]);
