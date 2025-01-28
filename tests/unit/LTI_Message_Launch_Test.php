@@ -3,6 +3,7 @@
 namespace IMSGlobal\LTI\Tests\unit;
 
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use IMSGlobal\LTI\Cookie;
 use IMSGlobal\LTI\LTI_JWT_Exception;
 use IMSGlobal\LTI\LTI_Message_Launch;
@@ -292,7 +293,7 @@ class LTI_Message_Launch_Test extends TestBase {
         
         $messageLaunch->expects($this->atLeastOnce())
             ->method('get_public_key')
-            ->willReturn(['key' => $this->publicKey]);
+            ->willReturn(new Key($this->publicKey, 'RS256'));
 
         $messageLaunch->expects($this->once())->method('import_validators')->willReturnCallback(
             function () {
@@ -329,7 +330,7 @@ class LTI_Message_Launch_Test extends TestBase {
         
         $messageLaunch->expects($this->atLeastOnce())
             ->method('get_public_key')
-            ->willReturn(['key' => $this->publicKey]);
+            ->willReturn(new Key($this->publicKey, 'RS256'));
 
         $messageLaunch->expects($this->once())->method('import_validators')->willReturnCallback(
             function () {
@@ -367,7 +368,7 @@ class LTI_Message_Launch_Test extends TestBase {
         
         $messageLaunch->expects($this->atLeastOnce())
             ->method('get_public_key')
-            ->willReturn(['key' => $this->publicKey]);
+            ->willReturn(new Key($this->publicKey, 'RS256'));
 
         $messageLaunch->expects($this->once())->method('import_validators')->willReturnCallback(
             function () {
