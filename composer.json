@@ -1,34 +1,34 @@
 {
-    "name": "talis/lti-1p3-php-library",
-    "type": "library",
-    "require": {
-        "php": ">=7.3.0",
-        "firebase/php-jwt": "6.0",
-        "phpseclib/phpseclib": "^2.0",
-        "paragonie/random_compat": "~1.0|~2.0|~9.99"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "4.8.36",
-        "squizlabs/php_codesniffer": "3.5.8"
-    },
-    "autoload": {
-        "psr-4": {
-            "IMSGlobal\\LTI\\": "src/lti"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "IMSGlobal\\LTI\\Tests\\": "tests/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Martin Lenord",
-            "email": "ims.m@rtin.dev"
-        }
-    ],
-    "scripts": {
-        "lint": "phpcs src",
-        "test": "phpunit tests/unit"
+  "name": "talis/lti-1p3-php-library",
+  "type": "library",
+  "require": {
+    "firebase/php-jwt": "6.2",
+    "php": ">=7.3.0",
+    "phpseclib/phpseclib": "^2.0",
+    "paragonie/random_compat": "~1.0|~2.0|~9.99"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.8.36",
+    "squizlabs/php_codesniffer": "3.5.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "IMSGlobal\\LTI\\": "src/lti"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "IMSGlobal\\LTI\\Tests\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Martin Lenord",
+      "email": "ims.m@rtin.dev"
+    }
+  ],
+  "scripts": {
+    "lint": "phpcs src",
+    "test": "phpunit tests/unit"
+  }
 }
