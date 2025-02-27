@@ -218,8 +218,6 @@ class LTI_Message_Launch {
         // Download key set
         $public_key_set = json_decode(file_get_contents($key_set_url), true);
 
-        echo "Dazza" . $public_key_set;
-
         if (empty($public_key_set)) {
             // Failed to fetch public keyset from URL.
             throw new LTI_Public_Key_Exception('Failed to fetch public key');
