@@ -379,7 +379,7 @@ class LTI_Message_Launch_Test extends TestBase {
         );
 
         $messageLaunch->validate(['state' => $state, 'id_token' => $jwt]);     
-    }      
+    }
     
     private function encodeJWT(array $payload, $key = null)
     {
