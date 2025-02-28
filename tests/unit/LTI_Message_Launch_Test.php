@@ -52,6 +52,23 @@ class LTI_Message_Launch_Test extends TestBase {
         )->validate();
     }
 
+    public function testValidateStateWithInvalidStateThrowsNoStateNotFoundExceptionIfUserBypassesStateValidation()
+    {
+        $this->setExpectedException(LTI_JWT_Exception::class, 'Missing id_token');
+        /** @var Cookie|\PHPUnit_Framework_MockObject_MockObject $cookie */
+        $cookie = $this->getMockBuilder(Cookie::class)
+            ->setMethods(['get_cookie'])
+            ->getMock();
+
+        $cookie->expects($this->never())->method('get_cookie');
+
+        LTI_Message_Launch::newInstance(
+            new DummyDatabase(),
+            null,
+            $cookie
+        )->validate(null, true);
+    }
+
     public function testValidateState()
     {
         $state = uniqid();
