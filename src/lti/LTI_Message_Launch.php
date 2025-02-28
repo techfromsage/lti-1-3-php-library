@@ -16,7 +16,7 @@ class LTI_Message_Launch {
     private $jwt;
     private $registration;
     private $launch_id;
-    private defaultAlgorithm = 'RS256';
+    private $defaultAlgorithm = 'RS256';
 
     /**
      * Constructor
