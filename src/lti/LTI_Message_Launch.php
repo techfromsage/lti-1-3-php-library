@@ -16,6 +16,7 @@ class LTI_Message_Launch {
     private $jwt;
     private $registration;
     private $launch_id;
+    private defaultAlgorithm = 'RS256';
 
     /**
      * Constructor
@@ -227,7 +228,7 @@ class LTI_Message_Launch {
         foreach ($public_key_set['keys'] as $key) {
             if ($key['kid'] == $this->jwt['header']['kid']) {
                 try {
-                    return JWK::parseKey($key, 'RS256');
+                    return JWK::parseKey($key, $this->defaultAlgorithm);
                 } catch(\Exception $e) {
                     return false;
                 }
