@@ -216,8 +216,14 @@ class LTI_Message_Launch {
     protected function get_public_key() {
         $key_set_url = $this->registration->get_key_set_url();
 
+        $opts = [
+            'http' => ['header' => 'User-Agent:lti-1-3-php-library']
+        ];
+
+        $context = stream_context_create($opts);
+
         // Download key set
-        $public_key_set = json_decode(file_get_contents($key_set_url), true);
+        $public_key_set = json_decode(file_get_contents($key_set_url, false, $context), true);
 
         if (empty($public_key_set)) {
             // Failed to fetch public keyset from URL.
