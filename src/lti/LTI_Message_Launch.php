@@ -75,18 +75,19 @@ class LTI_Message_Launch {
      * Validates all aspects of an incoming LTI message launch and caches the launch if successful.
      *
      * @param array|string  $request    An array of post request parameters. If not set will default to $_POST.
+     * @param boolean $insecurelyBypassStateValidation If true, the caller is responsible for securing against CSRF.
      *
      * @throws LTI_Exception        Will throw an LTI_Exception if validation fails.
      * @return LTI_Message_Launch   Will return $this if validation is successful.
      */
-    public function validate(array $request = null) {
+    public function validate(array $request = null, $insecurelyBypassStateValidation = false) {
 
         if ($request === null) {
             $request = $_POST;
         }
         $this->request = $request;
 
-        return $this->validate_state()
+        return $this->validate_state($insecurelyBypassStateValidation)
             ->validate_jwt_format()
             ->validate_nonce()
             ->validate_registration()
@@ -250,7 +251,13 @@ class LTI_Message_Launch {
         return $this;
     }
 
-    private function validate_state() {
+    /**
+     * @param boolean $insecurelyBypassStateValidation If true, the caller is responsible for securing against CSRF.
+     */
+    private function validate_state($insecurelyBypassStateValidation = false) {
+        if ($insecurelyBypassStateValidation) {
+            return $this;
+        }
         // Check State for OIDC.
         $expectedState = $this->cookie->get_cookie('lti1p3_' . $this->request['state']);
         if (empty($expectedState) || $expectedState !== $this->request['state']) {
